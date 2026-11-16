@@ -94,7 +94,7 @@ export function BackContent({ card }: { card: Card }) {
       )}
       {c.examiner?.length ? (
         <div className="exq">
-          <div className="sec"><h4 style={{ color: "var(--magenta)" }}>Examiner might ask</h4></div>
+          <div className="sec"><h4 style={{ color: "var(--sage)" }}>Examiner might ask</h4></div>
           {c.examiner.map((q, i) => <ExaminerItem key={i} q={q.q} a={q.a} />)}
         </div>
       ) : null}

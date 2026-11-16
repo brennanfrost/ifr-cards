@@ -25,6 +25,8 @@ export interface Settings {
   includeUnwritten: boolean;
   theme: Theme;
   onboarded: boolean;
+  /** Design/tutorial version the saved settings were made under. */
+  design?: number;
 }
 
 export interface State {
@@ -40,7 +42,7 @@ const KEY = "ifr-cards:v1";
 const defaults: State = {
   progress: {},
   oral: {},
-  settings: { dailyGoal: 30, sessionSize: 20, includeUnwritten: false, theme: "dark", onboarded: false },
+  settings: { dailyGoal: 30, sessionSize: 20, includeUnwritten: false, theme: "light", onboarded: false, design: 2 },
   testCodes: [],
   activity: {},
 };
@@ -95,11 +97,14 @@ export async function loadState() {
 }
 
 function merge(saved: Partial<State>): State {
-  return {
-    ...defaults,
-    ...saved,
-    settings: { ...defaults.settings, ...(saved.settings ?? {}) },
-  };
+  const settings = { ...defaults.settings, ...(saved.settings ?? {}) };
+  // v2 redesign: switch to the new light theme once and show the new tutorial.
+  if ((saved.settings?.design ?? 1) < 2) {
+    settings.theme = "light";
+    settings.onboarded = false;
+    settings.design = 2;
+  }
+  return { ...defaults, ...saved, settings };
 }
 
 export function update(fn: (s: State) => State) {

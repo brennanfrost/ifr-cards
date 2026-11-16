@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cardById, oralQuestions, taskByKey, type OralQ } from "../lib/deck";
 import { gradeOral } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
-import { go } from "../lib/router";
+import { back, go } from "../lib/router";
 import { Header } from "../components/Layout";
 import { IChevR, IClose, IMic, IShuffle, IUser, ICheck, IRedo } from "../components/icons";
 
@@ -23,9 +23,42 @@ function pickQuestions(pool: OralQ[], n = 10) {
   return [...shaky, ...unseen, ...rest].slice(0, n);
 }
 
+/** The question set for the next oral run (set before navigating to /oral/run). */
+let pendingRun: { qs: OralQ[]; label: string } | null = null;
+
+function startOral(qs: OralQ[], label: string) {
+  pendingRun = { qs, label };
+  go("/oral/run");
+}
+
+/** Full-screen oral run (no tab bar), like a study session. */
+export function OralSession() {
+  const [run, setRun] = useState(pendingRun);
+  const [round, setRound] = useState(0);
+  useEffect(() => {
+    if (!run) go("/oral", true);
+  }, [run]);
+  if (!run) return null;
+  const exit = () => {
+    pendingRun = null;
+    back("/oral");
+  };
+  return (
+    <OralRun
+      key={round}
+      qs={run.qs}
+      label={run.label}
+      onExit={exit}
+      onAgain={() => {
+        setRun({ ...run, qs: pickQuestions(run.qs.length < 10 ? run.qs : oralQuestions) });
+        setRound((r) => r + 1);
+      }}
+    />
+  );
+}
+
 export function Oral() {
   const oral = useStore((s) => s.oral);
-  const [run, setRun] = useState<{ qs: OralQ[]; label: string } | null>(null);
 
   const byTask = useMemo(() => {
     const m = new Map<string, OralQ[]>();
@@ -35,8 +68,6 @@ export function Oral() {
     }
     return [...m.entries()];
   }, []);
-
-  if (run) return <OralRun qs={run.qs} label={run.label} onExit={() => setRun(null)} onAgain={() => setRun({ ...run, qs: pickQuestions(run.qs.length < 10 ? run.qs : oralQuestions) })} />;
 
   const answered = Object.keys(oral).length;
   return (
@@ -53,7 +84,7 @@ export function Oral() {
         <p className="small" style={{ color: "var(--text-2)", margin: "0 0 16px" }}>
           Say your answer out loud like you would to the examiner, then reveal a model answer. Questions you miss come back first next time.
         </p>
-        <button className="btn primary" onClick={() => setRun({ qs: pickQuestions(oralQuestions), label: "Mixed oral" })}>
+        <button className="btn primary" onClick={() => startOral(pickQuestions(oralQuestions), "Mixed oral")}>
           <IShuffle /> Start a 10-question oral
         </button>
       </div>
@@ -63,7 +94,7 @@ export function Oral() {
         {byTask.map(([key, qs]) => {
           const t = taskByKey(key);
           return (
-            <button key={key} className="list-item" onClick={() => setRun({ qs: pickQuestions(qs, qs.length), label: `Task ${key}: ${t.name}` })}>
+            <button key={key} className="list-item" onClick={() => startOral(pickQuestions(qs, qs.length), `Task ${key}: ${t.name}`)}>
               <span className="numeral">{key}</span>
               <span className="grow">
                 <div className="li-title">{t.name}</div>
@@ -92,11 +123,11 @@ function OralRun({ qs, label, onExit, onAgain }: { qs: OralQ[]; label: string; o
         <div className="session-top"><button className="icon-btn" onClick={onExit} aria-label="Close"><IClose /></button></div>
         <div className="center" style={{ marginTop: 30 }}>
           <div className="eyebrow" style={{ marginTop: 0 }}>{label}</div>
-          <div className="summary-big" style={{ color: pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--amber)" : "var(--red)" }}>{score.right}/{qs.length}</div>
+          <div className="summary-big" style={{ color: pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--brand)" : "var(--red)" }}>{score.right}/{qs.length}</div>
           <p className="muted">answered well</p>
         </div>
         <div className="stack" style={{ marginTop: 26 }}>
-          <button className="btn primary" onClick={() => { setI(0); setShown(false); setScore({ right: 0, wrong: 0 }); onAgain(); }}><IRedo /> Another round</button>
+          <button className="btn primary" onClick={onAgain}><IRedo /> Another round</button>
           <button className="btn" onClick={onExit}>Done</button>
         </div>
       </div>
@@ -139,12 +170,12 @@ function OralRun({ qs, label, onExit, onAgain }: { qs: OralQ[]; label: string; o
       </div>
       <div style={{ flex: 1 }} />
       {shown ? (
-        <div className="session-actions">
+        <div className="session-actions sticky-actions">
           <button className="btn bad" onClick={() => answer(false)}>Missed it</button>
           <button className="btn good" onClick={() => answer(true)}><ICheck /> Nailed it</button>
         </div>
       ) : (
-        <div className="session-actions one">
+        <div className="session-actions one sticky-actions">
           <button className="btn primary" onClick={() => setShown(true)}>Reveal answer</button>
         </div>
       )}

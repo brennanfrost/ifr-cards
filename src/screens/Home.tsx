@@ -47,7 +47,7 @@ export function Home() {
         ) : (
           <button style={{ textAlign: "left", width: "100%" }} onClick={() => go("/more/settings")}>
             <div className="row">
-              <div className="numeral" style={{ color: "var(--amber)" }}><ICalendar width={20} /></div>
+              <div className="numeral"><ICalendar width={20} /></div>
               <div className="grow">
                 <div className="li-title">Set your checkride date</div>
                 <div className="li-sub">Reviews tighten up as the date gets close</div>
@@ -71,7 +71,7 @@ export function Home() {
           </div>
         </div>
         <div className="stat row">
-          <div className="numeral" style={{ width: 52, height: 52, borderRadius: 14, color: st ? "var(--amber)" : "var(--muted)" }}><IFlame width={24} /></div>
+          <div className="numeral" style={{ width: 52, height: 52, borderRadius: 14, color: st ? "var(--brand)" : "var(--muted)" }}><IFlame width={24} /></div>
           <div>
             <div className="v">{st}</div>
             <div className="l">day streak</div>
@@ -89,7 +89,7 @@ export function Home() {
           <IChevR className="chev" />
         </button>
         <button className="list-item" onClick={() => (s.testCodes.length ? startSession({ kind: "codes", label: "Knowledge test report" }) : go("/more/report"))}>
-          <span className="numeral" style={{ color: "var(--cyan)" }}><IDoc width={20} /></span>
+          <span className="numeral" style={{ color: "var(--sky)" }}><IDoc width={20} /></span>
           <span className="grow">
             <div className="li-title">Knowledge test report</div>
             <div className="li-sub">{s.testCodes.length ? `${s.testCodes.length} codes to review — the examiner will re-test these` : "Add the ACS codes you missed on the written"}</div>

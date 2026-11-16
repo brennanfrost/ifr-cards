@@ -8,7 +8,7 @@ import { ICards, IChevR } from "../components/icons";
 
 function Legend() {
   return (
-    <div className="legend" style={{ margin: "10px 2px 0" }}>
+    <div className="legend" style={{ margin: "16px 2px 0" }}>
       <span><i className="dot" /> New</span>
       <span><i className="dot missed" /> Missed</span>
       <span><i className="dot learning" /> Learning</span>
@@ -84,6 +84,12 @@ export function AreaView({ id }: { id: string }) {
   );
 }
 
+const TYPE_HINT: Record<ElemType, string> = {
+  K: "Facts the examiner quizzes you on",
+  R: "Hazards, judgment and what you'd do",
+  S: "What you show in the airplane",
+};
+
 export function TaskView({ taskKey }: { taskKey: string }) {
   const s = useStore((x) => x);
   const [areaId] = taskKey.split(".");
@@ -94,48 +100,66 @@ export function TaskView({ taskKey }: { taskKey: string }) {
     <div className="fade-in">
       <BackBar label={`Area ${areaId}`} fallback={`/browse/${areaId}`} />
       <div className="eyebrow" style={{ marginTop: 4 }}>Area {areaId} · Task {task.id}</div>
-      <h1 style={{ margin: "0 2px 12px", fontSize: 26, letterSpacing: "-0.02em" }}>{task.name}</h1>
+      <h1 style={{ margin: "0 2px 6px", fontSize: 27, letterSpacing: "-0.01em", lineHeight: 1.15 }}>{task.name}</h1>
 
-      <div className="panel small">
-        <div style={{ fontWeight: 700, marginBottom: 4 }}>Objective</div>
-        <div className="muted">{task.objective}</div>
-        <div style={{ fontWeight: 700, margin: "12px 0 4px" }}>References</div>
-        <div className="muted">{task.references}</div>
-        {task.notes.map((n, i) => (
-          <div key={i} className="muted" style={{ marginTop: 10 }}><b style={{ color: "var(--text-2)" }}>Note:</b> {n}</div>
-        ))}
-      </div>
+      <details className="about-task">
+        <summary><IChevR /> Objective and references</summary>
+        <div className="panel small" style={{ marginTop: 8 }}>
+          <div className="muted">{task.objective}</div>
+          <div style={{ fontWeight: 700, margin: "12px 0 4px" }}>References</div>
+          <div className="muted">{task.references}</div>
+          {task.notes.map((n, i) => (
+            <div key={i} className="muted" style={{ marginTop: 10 }}><b style={{ color: "var(--text-2)" }}>Note:</b> {n}</div>
+          ))}
+        </div>
+      </details>
 
-      <button className="btn primary" style={{ marginTop: 14 }} onClick={() => startSession({ kind: "task", key: taskKey, label: `Task ${taskKey}: ${task.name}` })}>
+      <button className="btn primary" style={{ marginTop: 12 }} onClick={() => startSession({ kind: "task", key: taskKey, label: `Task ${taskKey}: ${task.name}` })}>
         <ICards /> Study this task ({cards.length} cards)
       </button>
-      <Legend />
 
       {groups.map((g) => {
         const list = cards.filter((c) => c.type === g);
         if (!list.length) return null;
+        const states = list.map((c) => mastery(s.progress[c.id]));
+        const done = states.filter((m) => m === "solid" || m === "mastered").length;
         return (
-          <div key={g}>
-            <div className="eyebrow">{TYPE_LABEL[g]}</div>
+          <details key={g} className="group">
+            <summary>
+              <span className={`type-badge ${g}`}>{g}</span>
+              <span className="grow">
+                <div className="li-title">{TYPE_LABEL[g]} <span className="muted" style={{ fontWeight: 600 }}>· {list.length}</span></div>
+                <div className="li-sub">{TYPE_HINT[g]}</div>
+                <div className="row" style={{ marginTop: 8, gap: 10 }}>
+                  <div className="bar grow"><i style={{ width: `${(done / list.length) * 100}%` }} /></div>
+                  <span className="tiny muted mono">{done}/{list.length}</span>
+                </div>
+              </span>
+              <IChevR className="chev" />
+            </summary>
             <div className="list">
-              {list.map((c) => (
-                <button key={c.id} className="list-item" onClick={() => go(`/card/${c.id}`)}>
-                  <span className={`dot ${mastery(s.progress[c.id])}`} />
-                  <span className="grow">
-                    <div className="mono tiny" style={{ color: "var(--amber)" }}>{c.id}</div>
-                    <div className="li-title" style={{ fontWeight: 560, fontSize: 15 }}>
-                      {c.parent && <span className="muted">{c.parent.replace(/ such as$| including$/, "")}: </span>}
-                      {c.title}
-                    </div>
-                    {!c.content && <div className="li-sub">ACS text only</div>}
-                  </span>
-                  <IChevR className="chev" />
-                </button>
-              ))}
+              {list.map((c, idx) => {
+                const showParent = c.parent && c.parent !== list[idx - 1]?.parent;
+                return (
+                  <div key={c.id}>
+                    {showParent && <div className="sub-head">{c.id.replace(/[a-z]$/, "")} · {c.parent!.replace(/ such as$| including$|:$/, "")}</div>}
+                    <button className={`list-item${c.parent ? " nested" : ""}`} onClick={() => go(`/card/${c.id}`)}>
+                      <span className={`dot ${mastery(s.progress[c.id])}`} />
+                      <span className="grow">
+                        <div className="tiny" style={{ color: "var(--accent)", fontWeight: 700 }}>{c.id}</div>
+                        <div className="li-title" style={{ fontWeight: 600, fontSize: 15.5 }}>{c.title}</div>
+                        {!c.content && <div className="li-sub">ACS text only</div>}
+                      </span>
+                      <IChevR className="chev" />
+                    </button>
+                  </div>
+                );
+              })}
             </div>
-          </div>
+          </details>
         );
       })}
+      <Legend />
     </div>
   );
 }

@@ -56,11 +56,11 @@ export const Mark = (p: SVGProps<SVGSVGElement>) => (
       <clipPath id="mk"><circle cx="16" cy="16" r="12" /></clipPath>
     </defs>
     <g clipPath="url(#mk)">
-      <rect width="32" height="32" fill="#2a6fb3" />
-      <path d="M0 18.5 32 13.5V32H0z" fill="#8a5a2b" />
-      <path d="M0 18.5 32 13.5" stroke="#fff" strokeWidth="1.3" />
+      <rect width="32" height="32" fill="#8fb4d3" />
+      <path d="M0 18.5 32 13.5V32H0z" fill="#c4562c" />
+      <path d="M0 18.5 32 13.5" stroke="#f3eee7" strokeWidth="1.3" />
     </g>
-    <circle cx="16" cy="16" r="12" fill="none" stroke="#f6b445" strokeWidth="2" />
-    <path d="M9 16.2h4.5l2.5 2.3 2.5-2.3H23" fill="none" stroke="#f6b445" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx="16" cy="16" r="12" fill="none" stroke="#f3eee7" strokeWidth="2" />
+    <path d="M9 16.2h4.5l2.5 2.3 2.5-2.3H23" fill="none" stroke="#f3eee7" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );

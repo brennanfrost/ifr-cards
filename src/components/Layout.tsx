@@ -86,7 +86,7 @@ export function ToastHost() {
   return msg ? <div className="toast" role="status">{msg}</div> : null;
 }
 
-export function Ring({ value, size = 64, stroke = 7, color = "var(--amber)", children }: { value: number; size?: number; stroke?: number; color?: string; children?: ReactNode }) {
+export function Ring({ value, size = 64, stroke = 7, color = "var(--brand)", children }: { value: number; size?: number; stroke?: number; color?: string; children?: ReactNode }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
   return (

@@ -20,8 +20,9 @@ I'm continuing a project: **IFR Cards**, a free, mobile-first PWA flashcard app 
 ## Status
 **Done:** ACS parsing; Area I fully written (66 of 329 cards, ~30 oral questions, 13 mnemonics); all app code written; icons generated (`public/icons/`); **clean build** (`npm run build`, no TS errors); tested at 390×844 with headless Chrome (swipe both ways, tap/flip, card-back scroll, all 5 screens, Mock Oral, offline reload via service worker).
 **Fixes made in the build session:** added `vite-plugin-pwa/client` types to `tsconfig.app.json`; renamed the nav `.back` CSS class to `.back-link` (it was collapsing the card's back face to 40 px); made the bottom nav more opaque; fixed "1 cards" plurals.
+**Redesign (Nov 16):** Redtail palette (cream #F3EEE7, maroon #680F02, red #EC242A, ink #231F20) and Figtree font; light theme default; 7-step tutorial (`src/components/Tutorial.tsx`, replay from More); Browse task view groups K / R / S into collapsible sections with sub-elements under their parent; Mock Oral runs full-screen at `#/oral/run` with sticky buttons; status-bar strip for iPhone. Live at https://brennanfrost.github.io/ifr-cards/ (GitHub Pages via `.github/workflows/deploy.yml`; push to `main` to deploy).
 **Not done yet:**
-1. Deploy to an installable host (Netlify Drop with the built `dist/` folder, or GitHub Pages). Artifact preview exists but can't install/run offline.
+1. (Done) Deployed to GitHub Pages: repo brennanfrost/ifr-cards.
 2. Card content for Areas II–VIII (263 cards): II 27, III 27, IV 23, V 30, VI 98, VII 55, VIII 3. One Area at a time, same format as Area I.
 
 ## Content rules

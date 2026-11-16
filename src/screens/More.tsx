@@ -4,7 +4,7 @@ import { acsVersion, allCards, cardById, codeMatches, extractCodes, writtenCards
 import { exportState, importState, resetProgress, setSettings, update, useStore, type Theme } from "../lib/store";
 import { go, startSession } from "../lib/router";
 import { BackBar, Header, toast } from "../components/Layout";
-import { IChevR, IClose, IDoc, IDownload, IGear, IInfo, IKey, IPlus, IShare } from "../components/icons";
+import { IChevR, IClose, IDoc, IDownload, IGear, IInfo, IKey, IPlus, IQuestion, IShare } from "../components/icons";
 import { isIOS, isStandalone, useInstall } from "../lib/install";
 
 export function MoreHome() {
@@ -13,15 +13,16 @@ export function MoreHome() {
     <div className="fade-in">
       <Header title="More" />
       <div className="list">
-        <Item icon={<IKey width={20} />} color="var(--amber)" title="Memory aids" sub={`${mnemonics.length} mnemonics to drill`} to="/more/mnemonics" />
-        <Item icon={<IDoc width={20} />} color="var(--cyan)" title="Knowledge test report" sub="Study the codes you missed on the written" to="/more/report" />
+        <Item icon={<IQuestion width={20} />} color="var(--brand)" title="How to use IFR Cards" sub="Replay the walkthrough" onClick={() => setSettings({ onboarded: false })} />
+        <Item icon={<IKey width={20} />} color="var(--brand)" title="Memory aids" sub={`${mnemonics.length} mnemonics to drill`} to="/more/mnemonics" />
+        <Item icon={<IDoc width={20} />} color="var(--sky)" title="Knowledge test report" sub="Study the codes you missed on the written" to="/more/report" />
         <Item icon={<IGear width={20} />} color="var(--text-2)" title="Settings" sub="Checkride date, goals, theme, backup" to="/more/settings" />
         <Item icon={<IInfo width={20} />} color="var(--text-2)" title="About and sources" sub={`${writtenCards.length} written cards · ${acsVersion}`} to="/more/about" />
       </div>
       {!isStandalone() && (
         <div className="panel" style={{ marginTop: 14 }}>
           <div className="row" style={{ alignItems: "flex-start" }}>
-            <div className="numeral" style={{ color: "var(--amber)" }}><IShare width={20} /></div>
+            <div className="numeral" style={{ color: "var(--brand)" }}><IShare width={20} /></div>
             <div className="grow">
               <div className="li-title">Put it on your home screen</div>
               <div className="small muted" style={{ marginTop: 4 }}>
@@ -38,9 +39,9 @@ export function MoreHome() {
   );
 }
 
-function Item({ icon, color, title, sub, to }: { icon: React.ReactNode; color: string; title: string; sub: string; to: string }) {
+function Item({ icon, color, title, sub, to, onClick }: { icon: React.ReactNode; color: string; title: string; sub: string; to?: string; onClick?: () => void }) {
   return (
-    <button className="list-item" onClick={() => go(to)}>
+    <button className="list-item" onClick={() => (onClick ? onClick() : to && go(to))}>
       <span className="numeral" style={{ color }}>{icon}</span>
       <span className="grow">
         <div className="li-title">{title}</div>
@@ -69,7 +70,7 @@ export function Mnemonics() {
             <button key={m.id} className="panel" style={{ textAlign: "left", width: "100%", display: "block" }} onClick={() => setOpen((o) => ({ ...o, [m.id]: !o[m.id] }))}>
               <div className="row">
                 <div className="grow">
-                  <div style={{ fontWeight: 800, fontSize: 18, color: "var(--amber)" }}>{m.name}</div>
+                  <div style={{ fontWeight: 800, fontSize: 18, color: "var(--brand)" }}>{m.name}</div>
                   <div className="small muted">{m.what}</div>
                 </div>
                 {m.ref && <span className="chip">{m.ref.split(",")[0]}</span>}
@@ -79,7 +80,7 @@ export function Mnemonics() {
                   {m.lines.map((l, i) => <li key={i} style={{ margin: "4px 0", fontSize: 15 }}>{l}</li>)}
                 </ol>
               ) : (
-                <div className="small" style={{ marginTop: 10, color: "var(--cyan)", fontWeight: 600 }}>Say it, then tap to check</div>
+                <div className="small" style={{ marginTop: 10, color: "var(--sky)", fontWeight: 600 }}>Say it, then tap to check</div>
               )}
             </button>
           );
@@ -143,7 +144,7 @@ export function Report() {
             {matched.map((c) => (
               <button key={c.id} className="list-item" onClick={() => go(`/card/${c.id}`)}>
                 <span className="grow">
-                  <div className="mono tiny" style={{ color: "var(--amber)" }}>{c.id}</div>
+                  <div className="mono tiny" style={{ color: "var(--brand)" }}>{c.id}</div>
                   <div className="li-title" style={{ fontWeight: 560, fontSize: 15 }}>{c.title}</div>
                 </span>
                 <IChevR className="chev" />
@@ -269,7 +270,7 @@ export function About() {
           <b style={{ color: "var(--text)" }}>How scheduling works:</b> swipe right and a card comes back in a few days, then a week, then a few weeks. Swipe left and it comes back later in the same session and goes to Weak spots. As your checkride gets close, intervals shrink so everything gets reviewed.
         </p>
       </div>
-      <div className="panel small" style={{ marginTop: 12, borderColor: "color-mix(in srgb, var(--amber) 40%, transparent)" }}>
+      <div className="panel small" style={{ marginTop: 12, borderColor: "color-mix(in srgb, var(--brand) 40%, transparent)" }}>
         <b>Not FAA material.</b> Card answers summarize 14 CFR, the AIM and FAA handbooks in plain language. Regulations change — confirm anything you'll rely on in the current eCFR and AIM, and with your CFII.
       </div>
       <div className="eyebrow">Primary sources</div>

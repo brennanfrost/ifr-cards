@@ -38,7 +38,7 @@ export function StudyHome() {
           className="list-item"
           onClick={() => (s.testCodes.length ? startSession({ kind: "codes", label: "Knowledge test report" }) : go("/more/report"))}
         >
-          <span className="numeral" style={{ color: "var(--cyan)" }}><IDoc width={20} /></span>
+          <span className="numeral" style={{ color: "var(--sky)" }}><IDoc width={20} /></span>
           <span className="grow">
             <div className="li-title">Knowledge test report</div>
             <div className="li-sub">{s.testCodes.length ? `${s.testCodes.length} ACS codes from your report` : "Add the codes you missed on the written"}</div>
@@ -178,7 +178,7 @@ function Summary({ results, label, onRestart }: { results: { id: string; knew: b
       </div>
       <div className="center" style={{ marginTop: 24 }}>
         <div className="eyebrow" style={{ marginTop: 0 }}>{label} complete</div>
-        <div className="summary-big" style={{ color: pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--amber)" : "var(--red)" }}>{pct}%</div>
+        <div className="summary-big" style={{ color: pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--brand)" : "var(--red)" }}>{pct}%</div>
         <p className="muted">known on the first try · {firstTry.size} cards</p>
       </div>
       <div className="grid2" style={{ marginTop: 18 }}>
