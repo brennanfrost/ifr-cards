@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { type Card } from "../lib/deck";
+import { allCards, cardById, codeLabel, type Card } from "../lib/deck";
 import { buildSession, dueCount, grade, isWeak, type Scope } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
 import { back, go, startSession, takeScope } from "../lib/router";
@@ -12,7 +12,7 @@ import { Header } from "../components/Layout";
 export function StudyHome() {
   const s = useStore((x) => x);
   const { due, fresh } = dueCount(s);
-  const weak = useMemo(() => Object.values(s.progress).filter(isWeak).length, [s.progress]);
+  const weak = useMemo(() => allCards.filter((c) => isWeak(s.progress[c.id])).length, [s.progress]);
   const smart: Scope = { kind: "smart", label: "Smart session" };
   return (
     <div className="fade-in">
@@ -192,7 +192,7 @@ function Summary({ results, label, onRestart }: { results: { id: string; knew: b
             {missed.map((id) => (
               <button key={id} className="list-item" onClick={() => go(`/card/${id}`)}>
                 <span className="dot missed" />
-                <span className="grow mono small">{id}</span>
+                <span className="grow mono small">{cardById.get(id) ? codeLabel(cardById.get(id)!) : id}</span>
                 <IChevR className="chev" />
               </button>
             ))}

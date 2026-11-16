@@ -14,6 +14,11 @@ export interface ExaminerQ {
 }
 
 export interface CardContent {
+  /**
+   * Front-of-card question. Used when an ACS element is split into several
+   * smaller cards; each part asks one focused question.
+   */
+  title?: string;
   /** One-line core answer shown at the top of the back. */
   core?: string;
   sections: Section[];
@@ -22,4 +27,5 @@ export interface CardContent {
   refs?: string[];
 }
 
-export type ContentMap = Record<string, CardContent>;
+/** One card per element, or several focused cards (parts) for a big element. */
+export type ContentMap = Record<string, CardContent | CardContent[]>;

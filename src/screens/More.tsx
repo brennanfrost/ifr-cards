@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { mnemonics } from "../content";
-import { acsVersion, allCards, cardById, codeMatches, extractCodes, writtenCards } from "../lib/deck";
+import { acsVersion, allCards, cardById, codeLabel, codeMatches, extractCodes, writtenCards } from "../lib/deck";
 import { exportState, importState, resetProgress, setSettings, update, useStore, type Theme } from "../lib/store";
 import { go, startSession } from "../lib/router";
 import { BackBar, Header, toast } from "../components/Layout";
@@ -144,7 +144,7 @@ export function Report() {
             {matched.map((c) => (
               <button key={c.id} className="list-item" onClick={() => go(`/card/${c.id}`)}>
                 <span className="grow">
-                  <div className="mono tiny" style={{ color: "var(--brand)" }}>{c.id}</div>
+                  <div className="mono tiny" style={{ color: "var(--brand)" }}>{codeLabel(c)}</div>
                   <div className="li-title" style={{ fontWeight: 560, fontSize: 15 }}>{c.title}</div>
                 </span>
                 <IChevR className="chev" />

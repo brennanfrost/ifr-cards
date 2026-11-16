@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { cardById, oralQuestions, taskByKey, type OralQ } from "../lib/deck";
+import { cardById, codeLabel, oralQuestions, taskByKey, type OralQ } from "../lib/deck";
 import { gradeOral } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
 import { back, go } from "../lib/router";
@@ -155,7 +155,7 @@ function OralRun({ qs, label, onExit, onAgain }: { qs: OralQ[]; label: string; o
           <div className="dpe-avatar"><IMic /></div>
           <div className="grow">
             <div style={{ fontWeight: 700, fontSize: 14 }}>Examiner</div>
-            <button className="chip code" onClick={() => go(`/card/${card.id}`)}>{card.id}</button>
+            <button className="chip code" onClick={() => go(`/card/${card.id}`)}>{codeLabel(card)}</button>
           </div>
         </div>
         <div className="oral-q">{q.q}</div>

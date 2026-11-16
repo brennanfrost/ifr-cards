@@ -18,7 +18,7 @@ I'm continuing a project: **IFR Cards**, a free, mobile-first PWA flashcard app 
 - `tools/make_icons.py`: renders PWA icons into `public/icons/` with Playwright + Chrome.
 
 ## Status
-**Done:** ACS parsing; Area I fully written (66 of 329 cards, ~30 oral questions, 13 mnemonics); all app code written; icons generated (`public/icons/`); **clean build** (`npm run build`, no TS errors); tested at 390×844 with headless Chrome (swipe both ways, tap/flip, card-back scroll, all 5 screens, Mock Oral, offline reload via service worker).
+**Done:** ACS parsing; Area I fully written (now 96 cards after splitting big elements into focused parts, ~30 oral questions, 13 mnemonics); all app code written; icons generated (`public/icons/`); **clean build** (`npm run build`, no TS errors); tested at 390×844 with headless Chrome (swipe both ways, tap/flip, card-back scroll, all 5 screens, Mock Oral, offline reload via service worker).
 **Fixes made in the build session:** added `vite-plugin-pwa/client` types to `tsconfig.app.json`; renamed the nav `.back` CSS class to `.back-link` (it was collapsing the card's back face to 40 px); made the bottom nav more opaque; fixed "1 cards" plurals.
 **Redesign (Nov 16):** Redtail palette (cream #F3EEE7, maroon #680F02, red #EC242A, ink #231F20) and Figtree font; light theme default; 7-step tutorial (`src/components/Tutorial.tsx`, replay from More); Browse task view groups K / R / S into collapsible sections with sub-elements under their parent; Mock Oral runs full-screen at `#/oral/run` with sticky buttons; status-bar strip for iPhone. Live at https://brennanfrost.github.io/ifr-cards/ (GitHub Pages via `.github/workflows/deploy.yml`; push to `main` to deploy).
 **Not done yet:**
@@ -26,6 +26,7 @@ I'm continuing a project: **IFR Cards**, a free, mobile-first PWA flashcard app 
 2. Card content for Areas II–VIII (263 cards): II 27, III 27, IV 23, V 30, VI 98, VII 55, VIII 3. One Area at a time, same format as Area I.
 
 ## Content rules
+- **One question per card.** If an element covers several topics, split it: make the content entry an **array of parts**, each with a `title` (the front-of-card question), its own short `core`, ≤ ~6 bullets, and its own examiner Q/refs. Part ids become `IR.I.A.K1-1`, `-2`… and show as "IR.I.A.K1 · 1 of 7". A student should be able to answer the front out loud in about 20 seconds.
 - Accuracy matters: this is checkride material. Check regulation numbers, limits and figures against the current eCFR and AIM before writing them, and cite the reference on each card.
 - Plain, direct language; bold the numbers and terms an examiner would test.
 - Facts already checked: BasicMed (expanded Nov 2024: 6 passengers / 7 occupants, 12,500 lb); ICAO flight plan format required for FSS-filed plans; GPS/WAAS alternate planning (AIM 1-1-17/1-1-18); the "Multiengine Limited to VFR Only" rule (ACS Appendix 1); 61.133(b) is 50 NM.

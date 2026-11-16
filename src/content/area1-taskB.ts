@@ -2,73 +2,83 @@ import type { ContentMap } from "./types";
 
 // Area I, Task B — Weather Information
 export const area1TaskB: ContentMap = {
-  "IR.I.B.K1": {
-    core: "Use official FAA and National Weather Service sources — Flight Service and the NWS Aviation Weather Center — or apps that redistribute their data.",
-    sections: [
-      {
-        h: "Primary sources",
-        b: [
-          "**Flight Service** (Leidos): **1-800-WX-BRIEF** and **1800wxbrief.com**. Briefings are recorded, which documents that you got one",
-          "**NWS Aviation Weather Center:** **aviationweather.gov** — METARs, TAFs, GFA, AIRMETs, SIGMETs, icing and turbulence products",
-          "**NWS Storm Prediction Center** — convective outlooks",
-          "**EFB apps** (ForeFlight, Garmin Pilot, etc.) redistribute NWS/FAA data and can be used for planning",
-        ],
-      },
-      {
-        h: "Briefing types (Flight Service)",
-        b: [
-          "**Standard** — no previous briefing; the full picture",
-          "**Abbreviated** — update to a previous briefing, or specific items",
-          "**Outlook** — departure 6 or more hours away",
-        ],
-      },
-      {
-        h: "Why it matters",
-        b: [
-          "**91.103** requires the PIC to become familiar with **all available information**, including weather reports and forecasts, for an IFR flight",
-        ],
-      },
-    ],
-    examiner: [
-      {
-        q: "Is a ForeFlight briefing an acceptable weather briefing?",
-        a: "Yes, it uses NWS and FAA data. 91.103 requires me to be familiar with all available information; it doesn't require a specific source. A Flight Service briefing (including through ForeFlight's 1800wxbrief integration) also creates a record that I got one.",
-      },
-    ],
-    refs: ["14 CFR 91.103", "AC 91-92", "FAA-H-8083-28 (Aviation Weather Handbook)", "AIM 7-1"],
-  },
+  "IR.I.B.K1": [
+    {
+      title: "Where do you get official weather for an IFR flight?",
+      core: "FAA and National Weather Service sources: Flight Service and the NWS Aviation Weather Center, or apps that redistribute their data.",
+      sections: [
+        {
+          b: [
+            "**Flight Service** (Leidos): **1-800-WX-BRIEF** and **1800wxbrief.com**. Briefings are recorded, which documents that you got one",
+            "**NWS Aviation Weather Center:** **aviationweather.gov**: METARs, TAFs, GFA, AIRMETs, SIGMETs, icing and turbulence products",
+            "**NWS Storm Prediction Center:** convective outlooks",
+            "**EFB apps** (ForeFlight, Garmin Pilot, etc.) redistribute NWS/FAA data and can be used for planning",
+            "**91.103** requires the PIC to become familiar with **all available information**, including weather reports and forecasts, for an IFR flight",
+          ],
+        },
+      ],
+      examiner: [
+        {
+          q: "Is a ForeFlight briefing an acceptable weather briefing?",
+          a: "Yes, it uses NWS and FAA data. 91.103 requires me to be familiar with all available information; it doesn't require a specific source. A Flight Service briefing (including through ForeFlight's 1800wxbrief integration) also creates a record that I got one.",
+        },
+      ],
+      refs: ["14 CFR 91.103", "AC 91-92", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What are the three types of Flight Service briefing?",
+      core: "Standard (the full picture), abbreviated (an update or specific items) and outlook (6 or more hours before departure).",
+      sections: [
+        {
+          b: [
+            "**Standard:** no previous briefing; the full picture",
+            "**Abbreviated:** update to a previous briefing, or specific items",
+            "**Outlook:** departure **6 or more hours** away",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "AC 91-92"],
+    },
+  ],
 
-  "IR.I.B.K2a": {
-    core: "METARs are hourly observations, SPECIs are special observations for significant changes, and PIREPs are pilot reports — the only direct source for icing, turbulence and cloud tops.",
-    sections: [
-      {
-        h: "METAR / SPECI format",
-        b: [
-          "Type · station · date/time (Z) · **wind** (dddffGffKT; VRB; 180V240) · **visibility** (SM) · RVR · **weather** · **sky** · temp/dewpoint · **altimeter** · remarks",
-          "**Weather:** intensity (- light, + heavy, VC vicinity), descriptor (TS, SH, FZ), precip (RA, SN, DZ), obscuration (BR mist, FG fog, HZ haze, FU smoke)",
-          "**Sky:** FEW (1–2/8), SCT (3–4/8), **BKN (5–7/8)**, **OVC (8/8)**, **VV** (vertical visibility), heights in hundreds of feet **AGL**",
-          "**Ceiling** = lowest **BKN, OVC or VV** layer",
-          "M = minus (temperatures); A2992 = altimeter 29.92",
-          "Remarks: AO2 (automated with precip sensor), SLP, T-group (exact temps)",
-        ],
-      },
-      {
-        h: "PIREPs",
-        b: [
-          "**UA** = routine, **UUA** = urgent (tornado, severe icing or turbulence, LLWS, hail, volcanic ash)",
-          "Format: /OV location · /TM time · /FL altitude · /TP aircraft type · /SK sky · /WX · /TA temp · /WV wind · /TB turbulence · /IC icing · /RM remarks",
-          "Give PIREPs to ATC or Flight Service, especially for unforecast weather, icing, turbulence and tops",
-        ],
-      },
-    ],
-    examiner: [
-      {
-        q: "Decode: KCNY 121753Z 21012G22KT 6SM -RA BR BKN014 OVC025 08/06 A2995",
-        a: "Moab, 12th at 1753Z: wind 210° at 12 gusting 22 knots, 6 SM in light rain and mist, ceiling 1,400 broken, overcast 2,500, temp 8°C, dewpoint 6°C, altimeter 29.95.",
-      },
-    ],
-    refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)", "AC 91-92"],
-  },
+  "IR.I.B.K2a": [
+    {
+      title: "How do you read a METAR or SPECI?",
+      core: "A METAR is the hourly observation and a SPECI is a special one for a significant change. Same format: wind, visibility, weather, sky, temp/dewpoint, altimeter.",
+      sections: [
+        {
+          b: [
+            "Type · station · date/time (Z) · **wind** (dddffGffKT; VRB; 180V240) · **visibility** (SM) · RVR · **weather** · **sky** · temp/dewpoint · **altimeter** · remarks",
+            "**Weather:** intensity (- light, + heavy, VC vicinity), descriptor (TS, SH, FZ), precip (RA, SN, DZ), obscuration (BR mist, FG fog, HZ haze, FU smoke)",
+            "**Sky:** FEW (1–2/8), SCT (3–4/8), **BKN (5–7/8)**, **OVC (8/8)**, **VV** (vertical visibility), heights in hundreds of feet **AGL**",
+            "**Ceiling** = lowest **BKN, OVC or VV** layer",
+            "M = minus (temperatures); A2992 = altimeter 29.92. Remarks: AO2 (automated with precip sensor), SLP, T-group",
+          ],
+        },
+      ],
+      examiner: [
+        {
+          q: "Decode: KCNY 121753Z 21012G22KT 6SM -RA BR BKN014 OVC025 08/06 A2995",
+          a: "Moab, 12th at 1753Z: wind 210° at 12 gusting 22 knots, 6 SM in light rain and mist, ceiling 1,400 broken, overcast 2,500, temp 8°C, dewpoint 6°C, altimeter 29.95.",
+        },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What's a PIREP, and when is it urgent?",
+      core: "A pilot weather report. It's the only direct source for icing, turbulence and cloud tops. UUA marks an urgent one.",
+      sections: [
+        {
+          b: [
+            "**UA** = routine, **UUA** = urgent (tornado, severe icing or turbulence, LLWS, hail, volcanic ash)",
+            "Format: /OV location · /TM time · /FL altitude · /TP aircraft type · /SK sky · /WX · /TA temp · /WV wind · /TB turbulence · /IC icing · /RM remarks",
+            "Give PIREPs to ATC or Flight Service, especially for unforecast weather, icing, turbulence and tops",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+  ],
 
   "IR.I.B.K2b": {
     core: "The surface analysis shows fronts and pressure systems right now; the CVA shows where ceilings and visibility are VFR, MVFR, IFR or LIFR.",
@@ -96,40 +106,58 @@ export const area1TaskB: ContentMap = {
     refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "aviationweather.gov"],
   },
 
-  "IR.I.B.K2c": {
-    core: "A TAF forecasts conditions within 5 SM of the airport for 24 or 30 hours, issued four times a day.",
-    sections: [
-      {
-        h: "Basics",
-        b: [
-          "Covers **5 SM** around the runway complex",
-          "Valid **24 or 30 hours**; issued 4×/day (0000, 0600, 1200, 1800Z), amended as needed",
-          "Valid period written DDHH/DDHH; all times Z",
-          "**P6SM** = visibility more than 6 SM; **WS** = low-level wind shear",
-        ],
-      },
-      {
-        h: "Change groups",
-        b: [
-          "**FM** (from) — rapid, significant change starting at that time",
-          "**TEMPO** — temporary fluctuations, each lasting less than 1 hour, covering less than half the period",
-          "**PROB30 / PROB40** — probability of thunderstorms or precipitation",
-          "**BECMG** — gradual change over a period (usually ≤ 2 hours)",
-        ],
-      },
-      {
-        h: "Alternate planning",
-        b: ["Use the TAF for **1 hour before to 1 hour after ETA** to apply 91.169 (1-2-3 rule) — including TEMPO conditions"],
-      },
-    ],
-    examiner: [
-      {
-        q: "Your destination TAF shows FM1800 BKN030 with TEMPO 1820/1824 1SM BR OVC006 around your ETA of 1930Z. Do you need an alternate?",
-        a: "Yes. Conditions within 1 hour of ETA include a temporary ceiling of 600 ft and 1 SM, which is below 2,000 and 3. Conservatively, I treat the TEMPO conditions as forecast.",
-      },
-    ],
-    refs: ["14 CFR 91.169", "FAA-H-8083-28 (Aviation Weather Handbook)", "AIM 7-1"],
-  },
+  "IR.I.B.K2c": [
+    {
+      title: "What area and time does a TAF cover?",
+      core: "5 SM around the airport, for 24 or 30 hours, issued four times a day.",
+      sections: [
+        {
+          b: [
+            "Covers **5 SM** around the runway complex",
+            "Valid **24 or 30 hours**; issued 4×/day (0000, 0600, 1200, 1800Z), amended as needed",
+            "Valid period written DDHH/DDHH; all times Z",
+            "**P6SM** = visibility more than 6 SM; **WS** = low-level wind shear",
+          ],
+        },
+      ],
+      refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "AIM 7-1"],
+    },
+    {
+      title: "What do FM, TEMPO, PROB and BECMG mean in a TAF?",
+      core: "FM: a rapid change from that time. TEMPO: temporary fluctuations. PROB30/40: probability of storms or precipitation. BECMG: a gradual change.",
+      sections: [
+        {
+          b: [
+            "**FM** (from): rapid, significant change starting at that time",
+            "**TEMPO:** temporary fluctuations, each lasting less than 1 hour, covering less than half the period",
+            "**PROB30 / PROB40:** probability of thunderstorms or precipitation",
+            "**BECMG:** gradual change over a period (usually ≤ 2 hours)",
+          ],
+        },
+      ],
+      refs: ["FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "Which part of the TAF do you use to decide on an alternate?",
+      core: "1 hour before to 1 hour after your ETA, including any TEMPO conditions, checked against the 1-2-3 rule (91.169).",
+      sections: [
+        {
+          b: [
+            "Use the TAF for **1 hour before to 1 hour after ETA**",
+            "Include **TEMPO** conditions in that window",
+            "Below **2,000 ft ceiling or 3 SM** in that window → alternate required",
+          ],
+        },
+      ],
+      examiner: [
+        {
+          q: "Your destination TAF shows FM1800 BKN030 with TEMPO 1820/1824 1SM BR OVC006 around your ETA of 1930Z. Do you need an alternate?",
+          a: "Yes. Conditions within 1 hour of ETA include a temporary ceiling of 600 ft and 1 SM, which is below 2,000 and 3. Conservatively, I treat the TEMPO conditions as forecast.",
+        },
+      ],
+      refs: ["14 CFR 91.169"],
+    },
+  ],
 
   "IR.I.B.K2d": {
     core: "The Graphical Forecasts for Aviation (GFA) is the interactive aviationweather.gov tool that replaced the text area forecast for the lower 48.",
@@ -200,46 +228,63 @@ export const area1TaskB: ContentMap = {
     refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "spc.noaa.gov"],
   },
 
-  "IR.I.B.K2g": {
-    core: "AIRMETs warn of conditions hazardous to light aircraft, SIGMETs of severe hazards to all aircraft, and Convective SIGMETs of severe thunderstorm activity.",
-    sections: [
-      {
-        h: "AIRMET (issued every 6 hr, valid 6 hr)",
-        b: [
-          "**Sierra:** IFR conditions (ceiling < 1,000 and/or vis < 3 SM) over large areas; **mountain obscuration**",
-          "**Tango:** **moderate turbulence**, sustained surface winds **≥ 30 kt**, non-convective low-level wind shear",
-          "**Zulu:** **moderate icing** and **freezing levels**",
-          "G-AIRMETs are the graphical version, in 3-hour snapshots",
-        ],
-      },
-      {
-        h: "SIGMET (non-convective, valid up to 4 hr)",
-        b: [
-          "**Severe icing** not associated with thunderstorms",
-          "**Severe or extreme turbulence** or CAT not associated with thunderstorms",
-          "Dust or sandstorms lowering visibility below **3 SM**",
-          "**Volcanic ash** (valid up to 6 hr, as are tropical cyclone SIGMETs)",
-        ],
-      },
-      {
-        h: "Convective SIGMET (issued hourly at H+55, valid 2 hr)",
-        b: [
-          "**Tornadoes**, hail **≥ ¾ inch**, surface winds/gusts **≥ 50 kt**",
-          "**Embedded** thunderstorms; **lines** of thunderstorms; areas of heavy-precipitation thunderstorms",
-          "Implies severe turbulence, severe icing and low-level wind shear — no separate SIGMET is issued for those",
-        ],
-      },
-      {
-        h: "Also",
-        b: ["**Center Weather Advisory (CWA):** short-term (up to 2 hr) warning from an ARTCC's weather unit"],
-      },
-    ],
-    mnemonic: { name: "AIRMET letters", lines: ["Sierra = IFR & mountain obscuration (S for 'see')", "Tango = Turbulence & surface wind", "Zulu = icing (Zero °C) & freezing level"] },
-    examiner: [
-      { q: "There's an AIRMET Zulu along your route. Can you go?", a: "An AIRMET Zulu means moderate icing is forecast. In an airplane without known-icing approval (FIKI), I'd avoid the affected altitudes or not go — check freezing levels, tops, PIREPs and outs before deciding." },
-    ],
-    refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
-  },
+  "IR.I.B.K2g": [
+    {
+      title: "What do AIRMETs Sierra, Tango and Zulu warn about?",
+      core: "Hazards to light aircraft. Sierra: IFR and mountain obscuration. Tango: moderate turbulence and strong surface wind. Zulu: moderate icing and freezing levels.",
+      sections: [
+        {
+          h: "AIRMET (issued every 6 hr, valid 6 hr)",
+          b: [
+            "**Sierra:** IFR conditions (ceiling < 1,000 and/or vis < 3 SM) over large areas; **mountain obscuration**",
+            "**Tango:** **moderate turbulence**, sustained surface winds **≥ 30 kt**, non-convective low-level wind shear",
+            "**Zulu:** **moderate icing** and **freezing levels**",
+            "G-AIRMETs are the graphical version, in 3-hour snapshots",
+          ],
+        },
+      ],
+      mnemonic: { name: "AIRMET letters", lines: ["Sierra = IFR & mountain obscuration (S for 'see')", "Tango = Turbulence & surface wind", "Zulu = icing (Zero °C) & freezing level"] },
+      examiner: [
+        { q: "There's an AIRMET Zulu along your route. Can you go?", a: "An AIRMET Zulu means moderate icing is forecast. In an airplane without known-icing approval (FIKI), I'd avoid the affected altitudes or not go. I'd check freezing levels, tops, PIREPs and outs before deciding." },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What triggers a (non-convective) SIGMET?",
+      core: "Severe hazards to all aircraft: severe icing, severe or extreme turbulence, dust or sandstorms below 3 SM, and volcanic ash.",
+      sections: [
+        {
+          h: "SIGMET (valid up to 4 hr)",
+          b: [
+            "**Severe icing** not associated with thunderstorms",
+            "**Severe or extreme turbulence** or CAT not associated with thunderstorms",
+            "Dust or sandstorms lowering visibility below **3 SM**",
+            "**Volcanic ash** (valid up to 6 hr, as are tropical cyclone SIGMETs)",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What does a Convective SIGMET mean, and what's a CWA?",
+      core: "Severe thunderstorm activity, which implies severe turbulence, icing and wind shear. A CWA is a short-term warning from an ARTCC weather unit.",
+      sections: [
+        {
+          h: "Convective SIGMET (issued hourly at H+55, valid 2 hr)",
+          b: [
+            "**Tornadoes**, hail **≥ ¾ inch**, surface winds/gusts **≥ 50 kt**",
+            "**Embedded** thunderstorms; **lines** of thunderstorms; areas of heavy-precipitation thunderstorms",
+            "Implies severe turbulence, severe icing and low-level wind shear. No separate SIGMET is issued for those",
+          ],
+        },
+        {
+          h: "Center Weather Advisory (CWA)",
+          b: ["Short-term (up to **2 hr**) warning from an **ARTCC's** weather unit"],
+        },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+  ],
 
   "IR.I.B.K3a": {
     core: "Stable air resists vertical motion (smooth air, stratus, poor visibility); unstable air promotes it (cumulus, showers, turbulence, good visibility).",
@@ -264,39 +309,52 @@ export const area1TaskB: ContentMap = {
     refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "FAA-H-8083-25 (PHAK) ch. 12"],
   },
 
-  "IR.I.B.K3b": {
-    core: "Wind comes from pressure differences, is bent by the Coriolis force and slowed by friction. Know wind shear and mountain wave hazards.",
-    sections: [
-      {
-        h: "Factors affecting wind",
-        b: [
-          "**Pressure gradient** drives wind from high to low; tighter isobars = stronger wind",
-          "**Coriolis** deflects wind to the right (Northern Hemisphere) — aloft it flows parallel to isobars",
-          "**Friction** near the surface slows wind and turns it across isobars toward low pressure",
-          "Northern Hemisphere: **clockwise and outward around highs, counterclockwise and inward around lows**",
-        ],
-      },
-      {
-        h: "Wind shear",
-        b: [
-          "Sudden change in wind speed or direction; most dangerous **close to the ground**",
-          "Sources: thunderstorms/microbursts, fronts, temperature inversions, mountain terrain, jet stream",
-          "Watch for: LLWS in TAFs (WS), PIREPs, LLWAS alerts, large airspeed fluctuations on approach",
-        ],
-      },
-      {
-        h: "Mountain wave",
-        b: [
-          "Strong wind (about **25 kt+**) blowing **perpendicular to a ridge** in stable air",
-          "Signs: **lenticular** (standing lens-shaped) clouds, **rotor** clouds, cap clouds — but may be invisible in dry air",
-          "Downdrafts on the lee side can exceed the airplane's climb rate; rotors bring severe turbulence",
-          "Cross ridges at a **45° angle**, with **3,000–5,000 ft** clearance above the ridge",
-        ],
-      },
-    ],
-    examiner: [{ q: "Flying east of the Wasatch with 40 kt westerlies at ridge level — what's your concern?", a: "Mountain wave: strong downdrafts and rotor turbulence on the lee side. I'd plan higher altitudes, a 45° approach to ridges, and check PIREPs and AIRMET Tango." }],
-    refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "AIM 7-1"],
-  },
+  "IR.I.B.K3b": [
+    {
+      title: "What makes the wind blow, and which way does it circulate?",
+      core: "Pressure differences drive it, the Coriolis force bends it, and surface friction slows it. Clockwise around highs, counterclockwise around lows (Northern Hemisphere).",
+      sections: [
+        {
+          b: [
+            "**Pressure gradient** drives wind from high to low; tighter isobars = stronger wind",
+            "**Coriolis** deflects wind to the right (Northern Hemisphere). Aloft it flows parallel to isobars",
+            "**Friction** near the surface slows wind and turns it across isobars toward low pressure",
+            "**Clockwise and outward around highs, counterclockwise and inward around lows**",
+          ],
+        },
+      ],
+      refs: ["FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What is wind shear and how do you spot it?",
+      core: "A sudden change in wind speed or direction. It's most dangerous close to the ground.",
+      sections: [
+        {
+          b: [
+            "Sources: thunderstorms/microbursts, fronts, temperature inversions, mountain terrain, jet stream",
+            "Watch for: **WS** in TAFs, PIREPs, **LLWAS** alerts, large airspeed fluctuations on approach",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "When does mountain wave form, and how do you fly it?",
+      core: "Strong wind (about 25 kt or more) blowing across a ridge in stable air. Expect strong lee-side downdrafts and rotor turbulence.",
+      sections: [
+        {
+          b: [
+            "Strong wind (about **25 kt+**) blowing **perpendicular to a ridge** in stable air",
+            "Signs: **lenticular** clouds, **rotor** clouds, cap clouds. It may be invisible in dry air",
+            "Downdrafts on the lee side can exceed the airplane's climb rate; rotors bring severe turbulence",
+            "Cross ridges at a **45° angle**, with **3,000–5,000 ft** clearance above the ridge",
+          ],
+        },
+      ],
+      examiner: [{ q: "Flying east of the Wasatch with 40 kt westerlies at ridge level. What's your concern?", a: "Mountain wave: strong downdrafts and rotor turbulence on the lee side. I'd plan higher altitudes, a 45° approach to ridges, and check PIREPs and AIRMET Tango." }],
+      refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "AIM 7-1"],
+    },
+  ],
 
   "IR.I.B.K3c": {
     core: "The sun heats the earth and the earth heats the air. Temperature drives stability, fog, icing — and altimeter error in cold weather.",
@@ -417,63 +475,88 @@ export const area1TaskB: ContentMap = {
     refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
   },
 
-  "IR.I.B.K3h": {
-    core: "Thunderstorms need moisture, unstable air and a lifting force. Avoid severe storms by at least 20 NM; microbursts can overwhelm any airplane.",
-    sections: [
-      {
-        h: "Thunderstorms",
-        b: [
-          "Ingredients: **moisture, unstable lapse rate, lifting** (fronts, terrain, heating)",
-          "Stages: **cumulus** (updrafts) → **mature** (updrafts + downdrafts, precipitation begins, most intense) → **dissipating** (downdrafts)",
-          "Hazards: severe turbulence, icing, hail (even in clear air near the storm), lightning, wind shear, altimeter errors",
-          "Avoid severe storms by **at least 20 NM**; don't fly under the anvil; never try to fly through **embedded** storms or squall lines",
-          "Datalink radar is for **strategic avoidance**, not for picking a path through cells",
-        ],
-      },
-      {
-        h: "Microbursts",
-        b: [
-          "Small, intense downdraft — about **2.5 mi** across or less, downdrafts up to **6,000 fpm**, usually lasting about **15 minutes**",
-          "Sequence on approach: **headwind increase** (airspeed and performance up) → **downdraft** → **tailwind** (sudden airspeed loss)",
-          "Escape: **max power**, pitch for best climb (up to stall warning), **don't change configuration** until clear of the shear",
-          "Clues: virga, dust rings, LLWAS alerts, heavy rain from convective clouds",
-        ],
-      },
-    ],
-    examiner: [{ q: "On a 3-mile final you see a sudden 15-knot airspeed increase, then a strong sink. What's happening and what do you do?", a: "Classic microburst encounter. Go around immediately: max power, pitch up toward the stall warning as needed, keep configuration until clear, and report it." }],
-    refs: ["AIM 7-1", "AC 00-24 (Thunderstorms)", "FAA-H-8083-28 (Aviation Weather Handbook)"],
-  },
+  "IR.I.B.K3h": [
+    {
+      title: "What do thunderstorms need, and how far do you stay away?",
+      core: "Moisture, unstable air and a lifting force. Avoid severe storms by at least 20 NM and never try to penetrate embedded storms or lines.",
+      sections: [
+        {
+          b: [
+            "Ingredients: **moisture, unstable lapse rate, lifting** (fronts, terrain, heating)",
+            "Stages: **cumulus** (updrafts) → **mature** (updrafts + downdrafts, precipitation begins, most intense) → **dissipating** (downdrafts)",
+            "Hazards: severe turbulence, icing, hail (even in clear air near the storm), lightning, wind shear, altimeter errors",
+            "Avoid severe storms by **at least 20 NM**; don't fly under the anvil; never try to fly through **embedded** storms or squall lines",
+            "Datalink radar is for **strategic avoidance**, not for picking a path through cells",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "AC 00-24 (Thunderstorms)", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+    {
+      title: "What happens in a microburst on approach, and how do you escape?",
+      core: "Headwind gain, then a strong downdraft, then a tailwind and sudden airspeed loss. Max power, pitch for best climb and don't change configuration.",
+      sections: [
+        {
+          b: [
+            "Small, intense downdraft: about **2.5 mi** across or less, downdrafts up to **6,000 fpm**, usually lasting about **15 minutes**",
+            "Sequence on approach: **headwind increase** (airspeed and performance up) → **downdraft** → **tailwind** (sudden airspeed loss)",
+            "Escape: **max power**, pitch for best climb (up to stall warning), **don't change configuration** until clear of the shear",
+            "Clues: virga, dust rings, LLWAS alerts, heavy rain from convective clouds",
+          ],
+        },
+      ],
+      examiner: [{ q: "On a 3-mile final you see a sudden 15-knot airspeed increase, then a strong sink. What's happening and what do you do?", a: "Classic microburst encounter. Go around immediately: max power, pitch up toward the stall warning as needed, keep configuration until clear, and report it." }],
+      refs: ["AIM 7-1", "FAA-H-8083-28 (Aviation Weather Handbook)"],
+    },
+  ],
 
-  "IR.I.B.K3i": {
-    core: "Structural icing needs visible moisture and an airframe at or below 0 °C. Know the types, where they form, and how to get out.",
-    sections: [
-      {
-        h: "Types",
-        b: [
-          "**Rime:** small droplets freeze on contact; rough, milky; stratiform clouds",
-          "**Clear:** large droplets flow back before freezing; smooth, heavy, hardest to remove — cumuliform clouds and **freezing rain**",
-          "**Mixed:** both",
-          "**Supercooled large droplets (SLD)** / freezing rain/drizzle — can build ice beyond the protected areas",
-          "Most structural icing occurs from **0 °C to about −10 °C**",
-        ],
-      },
-      {
-        h: "Freezing level information",
-        b: ["Winds/temps aloft (FB), GFA freezing level, **AIRMET Zulu**, **CIP/FIP** (current/forecast icing products), PIREPs", "Look for a way out: a warm layer below, tops you can climb above, or a clear area"],
-      },
-      {
-        h: "If you pick up ice",
-        b: [
-          "Tell ATC and **change altitude** (to above-freezing air, or out of the cloud) or **turn around**",
-          "Use any anti-ice/deice equipment; pitot heat on",
-          "Expect higher stall speed and more drag; fly the approach faster, avoid full flaps (POH), don't use the autopilot to hide trends",
-          "Without **FIKI** approval, avoid known or forecast icing (most POH/AFM limitations prohibit it)",
-        ],
-      },
-    ],
-    examiner: [{ q: "You're at 8,000 ft in cloud, OAT −4 °C, and see ice forming on the wing. What do you do?", a: "Tell ATC I'm picking up ice and request a lower altitude where the temperature is above freezing (or a climb out of the tops if close), or a turn back. Pitot heat on, fly faster on approach, and don't wait for it to get worse." }],
-    refs: ["AIM 7-1", "AC 91-74 (Pilot Guide: Flight in Icing Conditions)", "FAA-H-8083-28 (Aviation Weather Handbook)"],
-  },
+  "IR.I.B.K3i": [
+    {
+      title: "What are the types of structural icing?",
+      core: "Rime, clear and mixed. It needs visible moisture and an airframe at or below 0 °C, and is most common from 0 to about −10 °C.",
+      sections: [
+        {
+          b: [
+            "**Rime:** small droplets freeze on contact; rough, milky; stratiform clouds",
+            "**Clear:** large droplets flow back before freezing; smooth, heavy, hardest to remove. Cumuliform clouds and **freezing rain**",
+            "**Mixed:** both",
+            "**Supercooled large droplets (SLD)** / freezing rain/drizzle can build ice beyond the protected areas",
+            "Most structural icing occurs from **0 °C to about −10 °C**",
+          ],
+        },
+      ],
+      refs: ["AIM 7-1", "AC 91-74 (Pilot Guide: Flight in Icing Conditions)"],
+    },
+    {
+      title: "Where do you find freezing levels, and what's your way out?",
+      core: "FB winds/temps aloft, the GFA, AIRMET Zulu, CIP/FIP and PIREPs. Before you go, know your out: warm air below, tops above, or a clear area.",
+      sections: [
+        {
+          b: [
+            "Winds/temps aloft (FB), GFA freezing level, **AIRMET Zulu**, **CIP/FIP** (current/forecast icing products), PIREPs",
+            "Plan a way out: a warm layer below, tops you can climb above, or a clear area",
+          ],
+        },
+      ],
+      refs: ["FAA-H-8083-28 (Aviation Weather Handbook)", "AC 91-74"],
+    },
+    {
+      title: "You're picking up ice. What do you do?",
+      core: "Tell ATC and get out: change altitude to warmer or clear air, or turn around. Fly faster on approach.",
+      sections: [
+        {
+          b: [
+            "Tell ATC and **change altitude** (to above-freezing air, or out of the cloud) or **turn around**",
+            "Use any anti-ice/deice equipment; pitot heat on",
+            "Expect higher stall speed and more drag; fly the approach faster, avoid full flaps (POH), don't use the autopilot to hide trends",
+            "Without **FIKI** approval, avoid known or forecast icing (most POH/AFM limitations prohibit it)",
+          ],
+        },
+      ],
+      examiner: [{ q: "You're at 8,000 ft in cloud, OAT −4 °C, and see ice forming on the wing. What do you do?", a: "Tell ATC I'm picking up ice and request a lower altitude where the temperature is above freezing (or a climb out of the tops if close), or a turn back. Pitot heat on, fly faster on approach, and don't wait for it to get worse." }],
+      refs: ["AIM 7-1", "AC 91-74 (Pilot Guide: Flight in Icing Conditions)"],
+    },
+  ],
 
   "IR.I.B.K3j": {
     core: "Fog is a cloud on the ground that forms when the air cools to its dewpoint (or moisture is added). It can drop an airport below minimums fast.",
@@ -746,38 +829,62 @@ export const area1TaskB: ContentMap = {
     refs: ["FAA-H-8083-2", "AC 91-92"],
   },
 
-  "IR.I.B.S4": {
-    core: "Use the 1-2-3 rule to decide whether you need an alternate, then check the alternate meets 600-2 / 800-2 or its published alternate minimums.",
-    sections: [
-      {
-        h: "Is an alternate required? (91.169)",
-        b: [
-          "Required **unless**: the destination has a standard instrument approach, **and** from **1 hour before to 1 hour after ETA**, forecast ceiling **≥ 2,000 ft above airport elevation** and visibility **≥ 3 SM**",
-        ],
-      },
-      {
-        h: "Alternate weather minimums (at ETA)",
-        b: [
-          "**Precision approach:** ceiling **600 ft**, visibility **2 SM**",
-          "**Non-precision:** ceiling **800 ft**, visibility **2 SM**",
-          "**No instrument approach:** ceiling and visibility allow descent from the MEA, approach and landing under **basic VFR**",
-          "**Non-standard alternate minimums** shown by the **A (triangle)** symbol; **A NA** = not authorized as an alternate",
-        ],
-      },
-      {
-        h: "GPS and alternates (AIM 1-1-17, 1-1-18)",
-        b: [
-          "**Non-WAAS GPS:** can plan a GPS approach at the destination **or** the alternate, **not both**",
-          "**WAAS:** can plan GPS approaches at both; at the alternate, plan using **LNAV or circling** minimums (non-precision)",
-        ],
-      },
-      { h: "Fuel (91.167)", b: ["Enough to reach destination, fly to the alternate, then **45 minutes** at normal cruise"] },
-    ],
-    mnemonic: { name: "1-2-3 rule", lines: ["1 hour before to 1 hour after ETA", "2,000 ft ceiling", "3 SM visibility"] },
-    examiner: [
-      { q: "Destination forecast at ETA ±1 hr: OVC025, 4 SM. Need an alternate?", a: "No — 2,500 and 4 meets the 1-2-3 rule (assuming the destination has an instrument approach)." },
-      { q: "Your alternate only has an RNAV (GPS) approach and you have a non-WAAS GPS. Destination also has only GPS approaches. Legal?", a: "No. With non-WAAS GPS I can't plan GPS approaches at both the destination and the alternate. I need an alternate with a non-GPS approach, or WAAS." },
-    ],
-    refs: ["14 CFR 91.167", "14 CFR 91.169", "AIM 1-1-17", "AIM 1-1-18", "TPP Alternate Minimums section"],
-  },
+  "IR.I.B.S4": [
+    {
+      title: "When do you need an alternate on an IFR flight plan?",
+      core: "Unless the destination has an instrument approach and the forecast from 1 hour before to 1 hour after ETA is at least 2,000 ft ceiling and 3 SM (91.169).",
+      sections: [
+        {
+          b: [
+            "Not required **only if** the destination has a standard instrument approach, **and**",
+            "from **1 hour before to 1 hour after ETA**, forecast ceiling **≥ 2,000 ft above airport elevation** and visibility **≥ 3 SM**",
+          ],
+        },
+      ],
+      mnemonic: { name: "1-2-3 rule", lines: ["1 hour before to 1 hour after ETA", "2,000 ft ceiling", "3 SM visibility"] },
+      examiner: [
+        { q: "Destination forecast at ETA ±1 hr: OVC025, 4 SM. Need an alternate?", a: "No. 2,500 and 4 meets the 1-2-3 rule (assuming the destination has an instrument approach)." },
+      ],
+      refs: ["14 CFR 91.169(a),(b)"],
+    },
+    {
+      title: "What weather does an airport need to be your alternate?",
+      core: "At your ETA there: 600-2 with a precision approach, 800-2 with a non-precision approach, or the published non-standard alternate minimums.",
+      sections: [
+        {
+          b: [
+            "**Precision approach:** ceiling **600 ft**, visibility **2 SM**",
+            "**Non-precision:** ceiling **800 ft**, visibility **2 SM**",
+            "**No instrument approach:** ceiling and visibility allow descent from the MEA, approach and landing under **basic VFR**",
+            "**Non-standard alternate minimums** shown by the **A (triangle)** symbol; **A NA** = not authorized as an alternate",
+          ],
+        },
+      ],
+      refs: ["14 CFR 91.169(c)", "TPP Alternate Minimums section"],
+    },
+    {
+      title: "Can you plan GPS approaches at both the destination and the alternate?",
+      core: "Only with WAAS, and at the alternate you plan with LNAV or circling minimums. Non-WAAS GPS: destination or alternate, not both.",
+      sections: [
+        {
+          b: [
+            "**Non-WAAS GPS:** can plan a GPS approach at the destination **or** the alternate, **not both**",
+            "**WAAS:** can plan GPS approaches at both; at the alternate, plan using **LNAV or circling** minimums (non-precision)",
+          ],
+        },
+      ],
+      examiner: [
+        { q: "Your alternate only has an RNAV (GPS) approach and you have a non-WAAS GPS. Destination also has only GPS approaches. Legal?", a: "No. With non-WAAS GPS I can't plan GPS approaches at both the destination and the alternate. I need an alternate with a non-GPS approach, or WAAS." },
+      ],
+      refs: ["AIM 1-1-17", "AIM 1-1-18"],
+    },
+    {
+      title: "How much fuel do you need for an IFR flight?",
+      core: "Enough to reach the destination, then the alternate (if required), then 45 minutes at normal cruise (91.167).",
+      sections: [
+        { b: ["Destination → **alternate** (if one is required) → **45 minutes** at normal cruise speed", "Many pilots plan **1 hour** of reserve as a personal minimum"] },
+      ],
+      refs: ["14 CFR 91.167"],
+    },
+  ],
 };

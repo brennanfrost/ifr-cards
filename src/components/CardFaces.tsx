@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { type Card, TYPE_LABEL, areaById, taskByKey } from "../lib/deck";
+import { type Card, TYPE_LABEL, areaById, codeLabel, taskByKey } from "../lib/deck";
 import { IFlip, IQuestion } from "./icons";
 
 /** Renders **bold** inside a string. */
@@ -28,7 +28,7 @@ export function CardHead({ card, right }: { card: Card; right?: ReactNode }) {
   return (
     <div className="face-head">
       <span className={`chip ${card.type}`}>{TYPE_LABEL[card.type]}</span>
-      <span className="chip code">{card.id}</span>
+      <span className="chip code">{codeLabel(card)}</span>
       <span className="grow" />
       {right}
     </div>
@@ -40,7 +40,7 @@ export function FrontBody({ card }: { card: Card }) {
     <div className="front-body">
       {card.parent && <div className="front-parent">{card.parent}</div>}
       <div className="front-title">{card.title}</div>
-      <div className="front-code">{card.id}</div>
+      <div className="front-code">{codeLabel(card)}</div>
     </div>
   );
 }
@@ -94,7 +94,7 @@ export function BackContent({ card }: { card: Card }) {
       )}
       {c.examiner?.length ? (
         <div className="exq">
-          <div className="sec"><h4 style={{ color: "var(--sage)" }}>Examiner might ask</h4></div>
+          <div className="sec"><h4>Examiner might ask</h4></div>
           {c.examiner.map((q, i) => <ExaminerItem key={i} q={q.q} a={q.a} />)}
         </div>
       ) : null}

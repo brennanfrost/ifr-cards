@@ -1,4 +1,4 @@
-import { areaById, areas, cardById, cardsForArea, cardsForTask, taskByKey, TYPE_LABEL, type ElemType } from "../lib/deck";
+import { areaById, areas, cardById, cardsForArea, cardsForTask, codeLabel, taskByKey, TYPE_LABEL, type ElemType } from "../lib/deck";
 import { mastery, readiness } from "../lib/scheduler";
 import { useStore } from "../lib/store";
 import { go, startSession } from "../lib/router";
@@ -142,11 +142,11 @@ export function TaskView({ taskKey }: { taskKey: string }) {
                 const showParent = c.parent && c.parent !== list[idx - 1]?.parent;
                 return (
                   <div key={c.id}>
-                    {showParent && <div className="sub-head">{c.id.replace(/[a-z]$/, "")} · {c.parent!.replace(/ such as$| including$|:$/, "")}</div>}
+                    {showParent && <div className="sub-head">{c.part ? c.acs : c.acs.replace(/[a-z]$/, "")} · {c.parent!.replace(/ such as$| including$|:$/, "")}</div>}
                     <button className={`list-item${c.parent ? " nested" : ""}`} onClick={() => go(`/card/${c.id}`)}>
                       <span className={`dot ${mastery(s.progress[c.id])}`} />
                       <span className="grow">
-                        <div className="tiny" style={{ color: "var(--accent)", fontWeight: 700 }}>{c.id}</div>
+                        <div className="tiny" style={{ color: "var(--accent)", fontWeight: 700 }}>{codeLabel(c)}</div>
                         <div className="li-title" style={{ fontWeight: 600, fontSize: 15.5 }}>{c.title}</div>
                         {!c.content && <div className="li-sub">ACS text only</div>}
                       </span>

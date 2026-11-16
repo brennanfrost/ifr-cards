@@ -79,33 +79,54 @@ export const area1TaskC: ContentMap = {
     refs: ["14 CFR 91.169", "TPP", "Chart Supplement", "AIM 5-1"],
   },
 
-  "IR.I.C.K1e": {
-    core: "IFR enroute charts show airways, the altitudes that guarantee obstacle clearance and navigation, and the frequencies you'll need.",
-    sections: [
-      {
-        h: "Charts",
-        b: ["**IFR Enroute Low** (below 18,000 MSL), **High** (FL180 and above), **Area** charts for busy terminals", "Updated on a **56-day** cycle — use current charts"],
-      },
-      {
-        h: "Altitudes to know",
-        b: [
-          "**MEA:** obstacle clearance **and** navigation signal coverage for the whole segment",
-          "**MOCA:** obstacle clearance for the segment; nav signal guaranteed only within **22 NM** of the VOR",
-          "**MRA:** lowest altitude to identify an intersection",
-          "**MCA:** cross the fix at or above it when heading to a higher MEA",
-          "**MAA:** highest usable altitude (signal interference above)",
-          "**OROCA:** off-route obstruction clearance — 1,000 ft (2,000 ft in mountains); no nav guarantee",
-          "**GNSS MEA:** lower MEA for GPS (shown with a G)",
-        ],
-      },
-      {
-        h: "Other symbols",
-        b: ["**Changeover points** (where to switch VORs)", "**Compulsory reporting points** (solid triangle) vs. on-request (open triangle)", "MEA gaps, airspace, ARTCC frequencies"],
-      },
-    ],
-    examiner: [{ q: "When can you descend to the MOCA instead of the MEA?", a: "When I'm within 22 NM of the VOR, since the MOCA guarantees obstacle clearance but only guarantees the nav signal within 22 NM. ATC must approve the altitude." }],
-    refs: ["14 CFR 91.177", "AIM 5-3", "FAA-H-8083-16 (Instrument Procedures Handbook)", "Aeronautical Chart User's Guide"],
-  },
+  "IR.I.C.K1e": [
+    {
+      title: "Which IFR enroute charts are there, and what else is on them?",
+      core: "Low (below 18,000 MSL), High (FL180 and up) and Area charts, on a 56-day cycle. Look for changeover points, reporting points and frequencies.",
+      sections: [
+        {
+          b: [
+            "**IFR Enroute Low** (below 18,000 MSL), **High** (FL180 and above), **Area** charts for busy terminals",
+            "Updated on a **56-day** cycle. Use current charts",
+            "**Changeover points** (where to switch VORs)",
+            "**Compulsory reporting points** (solid triangle) vs. on-request (open triangle)",
+            "MEA gaps, airspace, ARTCC frequencies",
+          ],
+        },
+      ],
+      refs: ["AIM 5-3", "Aeronautical Chart User's Guide"],
+    },
+    {
+      title: "MEA, MOCA, OROCA: what does each guarantee?",
+      core: "MEA: obstacle clearance and nav signal. MOCA: obstacle clearance, signal only within 22 NM of the VOR. OROCA: obstacle clearance off-route, no nav guarantee.",
+      sections: [
+        {
+          b: [
+            "**MEA:** obstacle clearance **and** navigation signal coverage for the whole segment",
+            "**MOCA:** obstacle clearance for the segment; nav signal guaranteed only within **22 NM** of the VOR",
+            "**OROCA:** off-route obstruction clearance: 1,000 ft (2,000 ft in mountains); no nav guarantee",
+            "**GNSS MEA:** lower MEA for GPS (shown with a G)",
+          ],
+        },
+      ],
+      examiner: [{ q: "When can you descend to the MOCA instead of the MEA?", a: "When I'm within 22 NM of the VOR, since the MOCA guarantees obstacle clearance but only guarantees the nav signal within 22 NM. ATC must approve the altitude." }],
+      refs: ["14 CFR 91.177", "AIM 5-3", "FAA-H-8083-16 (Instrument Procedures Handbook)"],
+    },
+    {
+      title: "What are the MRA, MCA and MAA?",
+      core: "MRA: lowest altitude to identify an intersection. MCA: cross the fix at or above it before a higher MEA. MAA: highest usable altitude on the airway.",
+      sections: [
+        {
+          b: [
+            "**MRA:** lowest altitude to identify an intersection",
+            "**MCA:** cross the fix at or above it when heading to a higher MEA",
+            "**MAA:** highest usable altitude (signal interference above)",
+          ],
+        },
+      ],
+      refs: ["AIM 5-3", "FAA-H-8083-16 (Instrument Procedures Handbook)"],
+    },
+  ],
 
   "IR.I.C.K1f": {
     core: "The Chart Supplement is the airport and facility directory: runways, lighting, frequencies, services, remarks and special notices.",
@@ -250,31 +271,53 @@ export const area1TaskC: ContentMap = {
     refs: ["14 CFR 91.167", "14 CFR 91.169"],
   },
 
-  "IR.I.C.K4": {
-    core: "IFR flight plans are filed in the ICAO format (FAA Form 7233-4): aircraft, equipment codes, route, altitude, times, alternate and supplementary information.",
-    sections: [
-      {
-        h: "Key items",
-        b: [
-          "**7** Aircraft ID · **8** Flight rules (I = IFR) and type of flight (G = general aviation, optional domestically)",
-          "**9** Number, aircraft type, wake turbulence category (L/M/H)",
-          "**10a** Equipment: e.g., **S** (standard VHF/VOR/ILS), **G** (GNSS), **R** (PBN approved), **B** (LPV)",
-          "**10b** Surveillance: e.g., **C** (Mode C), **S** (Mode S), **U1/U2** (UAT ADS-B Out / Out+In), **B1/B2** (1090ES)",
-          "**13** Departure airport and time (UTC)",
-          "**15** Cruising speed (N0140 = 140 kt TAS), level (A080 = 8,000 ft), **route**",
-          "**16** Destination, total EET (hhmm), **alternate**",
-          "**18** Other info: PBN/ codes, NAV/, REG/, DOF/, RMK/",
-          "**19** Endurance (fuel on board as time), persons on board, emergency/survival equipment, aircraft color, pilot",
-        ],
-      },
-      {
-        h: "Filing",
-        b: ["ICAO format is required for flight plans filed through Flight Service or FAA-contracted filing services (most EFBs)", "File at least **30 minutes** before departure"],
-      },
-    ],
-    examiner: [{ q: "Why does the equipment suffix matter?", a: "It tells ATC what routes and approaches I can fly — for example whether I can be cleared direct, on T-routes, or on RNAV procedures. File only what's installed and working." }],
-    refs: ["AIM Appendix 4 (FAA Form 7233-4)", "AIM 5-1-8"],
-  },
+  "IR.I.C.K4": [
+    {
+      title: "How and when do you file an IFR flight plan?",
+      core: "In the ICAO format (FAA Form 7233-4), at least 30 minutes before departure.",
+      sections: [
+        {
+          b: [
+            "ICAO format is required for flight plans filed through Flight Service or FAA-contracted filing services (most EFBs)",
+            "File at least **30 minutes** before departure",
+          ],
+        },
+      ],
+      refs: ["AIM 5-1-8", "AIM Appendix 4 (FAA Form 7233-4)"],
+    },
+    {
+      title: "What goes in the main boxes of the ICAO flight plan?",
+      core: "Aircraft ID and flight rules, aircraft type, departure and time, speed, altitude and route, destination, time enroute and alternate, then fuel and people on board.",
+      sections: [
+        {
+          b: [
+            "**7** Aircraft ID · **8** Flight rules (I = IFR) and type of flight (G = general aviation)",
+            "**9** Number, aircraft type, wake turbulence category (L/M/H)",
+            "**13** Departure airport and time (UTC)",
+            "**15** Cruising speed (N0140 = 140 kt TAS), level (A080 = 8,000 ft), **route**",
+            "**16** Destination, total EET (hhmm), **alternate**",
+            "**18** Other info: PBN/ codes, NAV/, REG/, DOF/, RMK/",
+            "**19** Endurance (fuel on board as time), persons on board, emergency/survival equipment, aircraft color, pilot",
+          ],
+        },
+      ],
+      refs: ["AIM Appendix 4 (FAA Form 7233-4)"],
+    },
+    {
+      title: "What do the equipment codes in boxes 10a and 10b mean?",
+      core: "10a is nav/comm equipment (S, G, R, B…). 10b is surveillance: transponder and ADS-B. File only what's installed and working.",
+      sections: [
+        {
+          b: [
+            "**10a** Equipment: e.g., **S** (standard VHF/VOR/ILS), **G** (GNSS), **R** (PBN approved), **B** (LPV)",
+            "**10b** Surveillance: e.g., **C** (Mode C), **S** (Mode S), **U1/U2** (UAT ADS-B Out / Out+In), **B1/B2** (1090ES)",
+          ],
+        },
+      ],
+      examiner: [{ q: "Why does the equipment code matter?", a: "It tells ATC what routes and approaches I can fly, for example whether I can be cleared direct, on T-routes, or on RNAV procedures. File only what's installed and working." }],
+      refs: ["AIM Appendix 4 (FAA Form 7233-4)"],
+    },
+  ],
 
   "IR.I.C.K5": {
     core: "Activate by getting an IFR clearance (from a tower, by phone, or in the air); close at a towered airport automatically, or by canceling with ATC elsewhere.",

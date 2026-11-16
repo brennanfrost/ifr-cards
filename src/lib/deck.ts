@@ -12,7 +12,12 @@ export const areas = (acs as { areas: AcsArea[] }).areas;
 export const acsVersion = (acs as { acs: string }).acs;
 
 export interface Card {
-  id: string; // ACS code
+  /** Unique card id: the ACS code, plus "-n" when an element is split into parts (e.g. IR.I.A.K1-2). */
+  id: string;
+  /** The ACS element or sub-element code this card belongs to. */
+  acs: string;
+  /** Set when an element is split into several cards. */
+  part?: { n: number; of: number };
   areaId: string;
   taskId: string;
   taskKey: string; // e.g. "I.A"
@@ -29,16 +34,41 @@ export const TYPE_LABEL: Record<ElemType, string> = { K: "Knowledge", R: "Risk M
 
 const cards: Card[] = [];
 let order = 0;
+function addCards(
+  base: { areaId: string; taskId: string; taskKey: string; type: ElemType },
+  acsCode: string,
+  title: string,
+  parent: string | undefined,
+) {
+  const c = content[acsCode];
+  if (Array.isArray(c)) {
+    // A big element split into focused cards: the question goes on the front,
+    // the element text sits above it for context.
+    c.forEach((part, i) => {
+      cards.push({
+        ...base,
+        id: `${acsCode}-${i + 1}`,
+        acs: acsCode,
+        part: { n: i + 1, of: c.length },
+        title: part.title ?? title,
+        parent: parent ? `${parent}: ${title}` : title,
+        content: part,
+        order: order++,
+      });
+    });
+  } else {
+    cards.push({ ...base, id: acsCode, acs: acsCode, title, parent, content: c, order: order++ });
+  }
+}
+
 for (const a of areas) {
   for (const t of a.tasks) {
     for (const e of t.elements) {
       const base = { areaId: a.id, taskId: t.id, taskKey: `${a.id}.${t.id}`, type: e.type };
       if (e.subs?.length) {
-        for (const s of e.subs) {
-          cards.push({ ...base, id: s.code, title: s.text, parent: e.text.replace(/[:,]\s*$/, ""), content: content[s.code], order: order++ });
-        }
+        for (const s of e.subs) addCards(base, s.code, s.text, e.text.replace(/[:,]\s*$/, ""));
       } else {
-        cards.push({ ...base, id: e.code, title: e.text.replace(/\.$/, ""), content: content[e.code], order: order++ });
+        addCards(base, e.code, e.text.replace(/\.$/, ""), undefined);
       }
     }
   }
@@ -64,9 +94,15 @@ export function cardsForArea(id: string) {
 
 /** Does a code (element, task "IR.I.B", or area "IR.I") cover this card? */
 export function codeMatches(code: string, card: Card) {
-  if (/[KRS]\d+[a-z]$/.test(code)) return card.id === code; // sub-element
-  if (/[KRS]\d+$/.test(code)) return card.id === code || (card.id.startsWith(code) && /^[a-z]$/.test(card.id.slice(code.length)));
-  return card.id.startsWith(code + "."); // task or area
+  const id = card.acs;
+  if (/[KRS]\d+[a-z]$/.test(code)) return id === code; // sub-element
+  if (/[KRS]\d+$/.test(code)) return id === code || (id.startsWith(code) && /^[a-z]$/.test(id.slice(code.length)));
+  return id.startsWith(code + "."); // task or area
+}
+
+/** Display label for a card: its ACS code, plus "· 2 of 4" for split elements. */
+export function codeLabel(card: Card) {
+  return card.part ? `${card.acs} · ${card.part.n} of ${card.part.of}` : card.acs;
 }
 
 export interface OralQ extends ExaminerQ {
