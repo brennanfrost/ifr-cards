@@ -208,6 +208,10 @@ export function Settings() {
           <div className="grow"><div style={{ fontWeight: 650 }}>Include unwritten cards</div><div className="small muted">Show ACS-only elements (no answer yet) in sessions</div></div>
           <button className={`toggle${s.includeUnwritten ? " on" : ""}`} role="switch" aria-checked={s.includeUnwritten} onClick={() => setSettings({ includeUnwritten: !s.includeUnwritten })} />
         </div>
+        <div className="row">
+          <div className="grow"><div style={{ fontWeight: 650 }}>Skill cards in study sessions</div><div className="small muted">Off: Skill (S) elements are only in Flight briefings</div></div>
+          <button className={`toggle${s.skillsInSessions ? " on" : ""}`} role="switch" aria-checked={!!s.skillsInSessions} onClick={() => setSettings({ skillsInSessions: !s.skillsInSessions })} />
+        </div>
         <div>
           <div style={{ fontWeight: 650, marginBottom: 8 }}>Checkride airplane</div>
           <EngineChoice />

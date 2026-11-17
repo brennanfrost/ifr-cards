@@ -29,6 +29,8 @@ export interface Settings {
   design?: number;
   /** Airplane class for the checkride. Multiengine-only Tasks are hidden unless "multi". */
   engines?: "single" | "multi";
+  /** Include Skill (S) cards in swipe sessions. Off by default: they live in Flight briefings. */
+  skillsInSessions?: boolean;
 }
 
 export interface State {
@@ -37,6 +39,8 @@ export interface State {
   settings: Settings;
   testCodes: string[];
   activity: Record<string, number>; // YYYY-MM-DD -> cards reviewed
+  /** Flight briefings read: task key -> time last marked briefed. */
+  briefed: Record<string, number>;
 }
 
 const KEY = "ifr-cards:v1";
@@ -47,6 +51,7 @@ const defaults: State = {
   settings: { dailyGoal: 30, sessionSize: 20, includeUnwritten: false, theme: "light", onboarded: false, design: 2 },
   testCodes: [],
   activity: {},
+  briefed: {},
 };
 
 let state: State = defaults;
@@ -149,6 +154,10 @@ export function importState(json: string) {
 
 export function resetProgress() {
   update((s) => ({ ...s, progress: {}, oral: {}, activity: {} }));
+}
+
+export function markBriefed(taskKey: string) {
+  update((s) => ({ ...s, briefed: { ...s.briefed, [taskKey]: Date.now() } }));
 }
 
 export function setSettings(patch: Partial<Settings>) {

@@ -64,3 +64,7 @@ export const Mark = (p: SVGProps<SVGSVGElement>) => (
     <path d="M9 16.2h4.5l2.5 2.3 2.5-2.3H23" fill="none" stroke="#f3eee7" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
+
+export const IPlane = (p: SVGProps<SVGSVGElement>) => (
+  <svg {...base(p)}><path d="M12 2.5c.9 0 1.5 1 1.5 2.2v4.9l7.5 4.3v2l-7.5-2.3v4.1l2.2 1.8V21L12 20l-3.7 1v-1.5l2.2-1.8v-4.1L3 15.9v-2l7.5-4.3V4.7c0-1.2.6-2.2 1.5-2.2z" /></svg>
+);

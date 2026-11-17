@@ -1,10 +1,10 @@
 import { areaById, areas, cardById, taskApplies, cardsForArea, cardsForTask, codeLabel, taskByKey, TYPE_LABEL, type ElemType } from "../lib/deck";
-import { mastery, readiness } from "../lib/scheduler";
+import { mastery, readiness, inGround } from "../lib/scheduler";
 import { useStore } from "../lib/store";
 import { go, startSession } from "../lib/router";
 import { BackBar, Header } from "../components/Layout";
 import { BackContent, CardHead } from "../components/CardFaces";
-import { ICards, IChevR } from "../components/icons";
+import { ICards, IChevR, IPlane } from "../components/icons";
 
 function Legend() {
   return (
@@ -95,6 +95,8 @@ export function TaskView({ taskKey }: { taskKey: string }) {
   const [areaId] = taskKey.split(".");
   const task = taskByKey(taskKey);
   const cards = cardsForTask(taskKey);
+  const groundCount = cards.filter((c) => inGround(c, s)).length;
+  const skillCount = cards.filter((c) => c.type === "S").length;
   const groups: ElemType[] = ["K", "R", "S"];
   return (
     <div className="fade-in">
@@ -114,9 +116,16 @@ export function TaskView({ taskKey }: { taskKey: string }) {
         </div>
       </details>
 
-      <button className="btn primary" style={{ marginTop: 12 }} onClick={() => startSession({ kind: "task", key: taskKey, label: `Task ${taskKey}: ${task.name}` })}>
-        <ICards /> Study this task ({cards.length} cards)
-      </button>
+      {groundCount > 0 && (
+        <button className="btn primary" style={{ marginTop: 12 }} onClick={() => startSession({ kind: "task", key: taskKey, label: `Task ${taskKey}: ${task.name}` })}>
+          <ICards /> Study this task ({groundCount} cards)
+        </button>
+      )}
+      {skillCount > 0 && (
+        <button className="btn" style={{ marginTop: 10 }} onClick={() => go(`/brief/${taskKey}`)}>
+          <IPlane /> Flight briefing ({skillCount} skills)
+        </button>
+      )}
 
       {groups.map((g) => {
         const list = cards.filter((c) => c.type === g);

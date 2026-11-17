@@ -8,6 +8,7 @@ import { Session, StudyHome } from "./screens/Study";
 import { AreaView, BrowseHome, CardView, TaskView } from "./screens/Browse";
 import { Oral, OralSession } from "./screens/Oral";
 import { RegsHome, RegView } from "./screens/Regs";
+import { Briefing } from "./screens/Flight";
 import { About, Mnemonics, MoreHome, Report, Settings } from "./screens/More";
 
 function useTheme() {
@@ -30,7 +31,8 @@ function Screen({ route }: { route: string }) {
   const parts = path.split("/").filter(Boolean);
   switch (parts[0]) {
     case undefined: return <Home />;
-    case "study": return <StudyHome />;
+    case "study": return <StudyHome tab={parts[1] === "flight" ? "flight" : "ground"} />;
+    case "brief": return <Briefing taskKey={decodeURIComponent(parts[1] ?? "")} />;
     case "session": return <Session />;
     case "oral": return parts[1] === "run" ? <OralSession /> : <Oral />;
     case "browse":

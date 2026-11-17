@@ -507,3 +507,11 @@ textarea.input { min-height: 110px; resize: vertical; line-height: 1.4; }
 .engine-d { display: block; font-size: 13.5px; color: var(--muted); margin-top: 1px; }
 :root[data-theme="dark"] .engine-opt.on .engine-radio { border-color: var(--accent); }
 :root[data-theme="dark"] .engine-opt.on .engine-radio::after { background: var(--accent); }
+
+/* ---------- Ground / Flight ---------- */
+.mode-switch { margin: 2px 0 16px; }
+.mode-switch button { height: 42px; font-size: 15px; font-weight: 750; }
+.brief-item { margin-top: 12px; }
+.brief-num { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex: none; background: var(--sage-soft); color: var(--sage); font-weight: 850; font-size: 14px; margin-top: 2px; }
+.brief-title { font-size: 18px; font-weight: 800; line-height: 1.25; margin-top: 2px; }
+.brief-item .core { font-size: 16px; }

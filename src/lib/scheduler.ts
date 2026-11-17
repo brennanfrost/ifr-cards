@@ -71,7 +71,7 @@ export function mastery(p?: CardProgress): Mastery {
 
 const SCORE = [0.1, 0.35, 0.6, 0.8, 0.92, 1];
 export function readiness(cards: Card[], s: State) {
-  const pool = cards.filter((c) => c.content);
+  const pool = cards.filter((c) => c.content && inGround(c, s));
   if (!pool.length) return null;
   const total = pool.reduce((sum, c) => {
     const p = s.progress[c.id];
@@ -91,8 +91,12 @@ export interface Scope {
   label: string;
 }
 
+/** Ground study = Knowledge and Risk cards. Skill cards are Flight briefings unless the user opts in. */
+export const inGround = (c: Card, s: State) => !!s.settings.skillsInSessions || c.type !== "S";
+
 export function scopePool(scope: Scope, s: State): Card[] {
-  const base = s.settings.includeUnwritten || scope.kind === "task" ? activeCards() : activeWritten();
+  const all = s.settings.includeUnwritten || scope.kind === "task" ? activeCards() : activeWritten();
+  const base = scope.types?.length ? all : all.filter((c) => inGround(c, s));
   let pool = base;
   if (scope.kind === "task") pool = base.filter((c) => c.taskKey === scope.key);
   if (scope.kind === "area") pool = base.filter((c) => c.areaId === scope.key);
@@ -123,7 +127,7 @@ export function buildSession(scope: Scope, s: State, size = s.settings.sessionSi
 
 export function dueCount(s: State) {
   const now = Date.now();
-  const pool = s.settings.includeUnwritten ? activeCards() : activeWritten();
+  const pool = (s.settings.includeUnwritten ? activeCards() : activeWritten()).filter((c) => inGround(c, s));
   let due = 0;
   let fresh = 0;
   for (const c of pool) {

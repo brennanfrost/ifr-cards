@@ -1,7 +1,7 @@
 import { EngineChoice } from "../components/EngineChoice";
 import { useMemo } from "react";
 import { activeCards, areas, cardsForArea, acsVersion } from "../lib/deck";
-import { daysUntil, dueCount, isWeak, readiness, streak, todayKey } from "../lib/scheduler";
+import { daysUntil, dueCount, isWeak, readiness, streak, todayKey, inGround } from "../lib/scheduler";
 import { useStore } from "../lib/store";
 import { go, startSession } from "../lib/router";
 import { Ring } from "../components/Layout";
@@ -14,7 +14,7 @@ export function Home() {
   const days = daysUntil(s.settings.checkride);
   const today = s.activity[todayKey()] ?? 0;
   const st = streak(s.activity);
-  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id])).length, [s.progress, s.settings.engines]);
+  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id]) && inGround(c, s)).length, [s]);
   const install = useInstall();
 
   const areaRows = useMemo(

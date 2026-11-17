@@ -34,7 +34,9 @@ const TABS = [
 ];
 
 export function BottomNav({ route }: { route: string }) {
-  const active = TABS.slice(1).find((t) => route.startsWith(t.path))?.path ?? (route === "/" ? "/" : route.startsWith("/card") ? "/browse" : "/");
+  const active =
+    TABS.slice(1).find((t) => route.startsWith(t.path))?.path ??
+    (route.startsWith("/card") ? "/browse" : route.startsWith("/brief") ? "/study" : route.startsWith("/reg") ? "/more" : "/");
   return (
     <nav className="nav" aria-label="Main">
       <div className="nav-inner">

@@ -24,7 +24,9 @@ I'm continuing a project: **IFR Cards**, a free, mobile-first PWA flashcard app 
 **Content complete (Nov 16):** all 8 Areas written (`src/content/area1-task*.ts`, `area2.ts`…`area8.ts`); shared skill cards in `common.ts`. Every element has content.
 **FAR/AIM section:** `src/content/regs.ts` (41 entries, summaries written from eCFR and faa.gov AIM, verbatim key wording, links). Card refs that match a reg are tappable (`regForRef`). Regs drill reuses Mock Oral (`startOral`).
 **Sources rule:** FAA sources only: 14 CFR (eCFR), AIM, FAA handbooks (8083-series), ACs, ACS, TPP/chart guides, FAA-approved POH/AFM; NWS sites only as weather data sources. Verify via the eCFR API in a browser (`/api/versioner/v1/full/<date>/title-14.xml?part=91&section=91.xxx`) and AIM pages on faa.gov.
-**Possible next steps:** Ground/Flight filter (K+R vs S); content review by a CFII; more Mock Oral scenarios.
+**Single/multiengine:** `settings.engines`; `MULTI_ONLY_TASKS` (VII.B, VII.C) hidden unless "multi" (`taskApplies`, `activeCards`).
+**Ground/Flight:** Study tab switch. Ground sessions, due counts and readiness use K+R only (`inGround`); Skill cards are Flight briefings (`#/study/flight`, `#/brief/<task>`, `state.briefed`). Settings toggle "Skill cards in study sessions" adds them back.
+**Possible next steps:** content review by a CFII; more Mock Oral scenarios.
 
 ## Content rules
 - **One question per card.** If an element covers several topics, split it: make the content entry an **array of parts**, each with a `title` (the front-of-card question), its own short `core`, ≤ ~6 bullets, and its own examiner Q/refs. Part ids become `IR.I.A.K1-1`, `-2`… and show as "IR.I.A.K1 · 1 of 7". A student should be able to answer the front out loud in about 20 seconds.

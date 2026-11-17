@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { activeCards, cardById, codeLabel, type Card } from "../lib/deck";
-import { buildSession, dueCount, grade, isWeak, type Scope } from "../lib/scheduler";
+import { buildSession, dueCount, grade, inGround, isWeak, type Scope } from "../lib/scheduler";
+import { FlightHome } from "./Flight";
 import { getState, useStore } from "../lib/store";
 import { back, go, startSession, takeScope } from "../lib/router";
 import { SwipeCard, type SwipeHandle } from "../components/SwipeCard";
@@ -9,14 +10,26 @@ import { IChevL, IChevR, IClose, ICards, ITarget, IDoc, ICheck, IRedo } from "..
 import { Header } from "../components/Layout";
 
 /** Study tab landing: choose what to study. */
-export function StudyHome() {
-  const s = useStore((x) => x);
-  const { due, fresh } = dueCount(s);
-  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id])).length, [s.progress, s.settings.engines]);
-  const smart: Scope = { kind: "smart", label: "Smart session" };
+export function StudyHome({ tab = "ground" }: { tab?: "ground" | "flight" }) {
   return (
     <div className="fade-in">
-      <Header title="Study" sub="Swipe right if you know it, left if you don't" />
+      <Header title="Study" sub={tab === "ground" ? "Oral prep: swipe right if you know it, left if you don't" : "Briefings for what you fly on the checkride"} />
+      <div className="seg mode-switch" role="tablist" aria-label="Ground or Flight">
+        <button role="tab" aria-selected={tab === "ground"} className={tab === "ground" ? "on" : ""} onClick={() => go("/study", true)}>Ground</button>
+        <button role="tab" aria-selected={tab === "flight"} className={tab === "flight" ? "on" : ""} onClick={() => go("/study/flight", true)}>Flight</button>
+      </div>
+      {tab === "flight" ? <FlightHome /> : <GroundHome />}
+    </div>
+  );
+}
+
+function GroundHome() {
+  const s = useStore((x) => x);
+  const { due, fresh } = dueCount(s);
+  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id]) && inGround(c, s)).length, [s]);
+  const smart: Scope = { kind: "smart", label: "Smart session" };
+  return (
+    <div>
       <button className="btn primary" style={{ height: 60 }} onClick={() => startSession(smart)}>
         <ICards /> Start smart session
       </button>
@@ -57,7 +70,7 @@ export function StudyHome() {
         ))}
       </div>
       <p className="small muted" style={{ marginTop: 18 }}>
-        To study a single task in order, open it from <a href="#/browse">Browse</a>.
+        Ground sessions use Knowledge and Risk cards. Skill elements are in <a href="#/study/flight">Flight</a>. To study one task in order, open it from <a href="#/browse">Browse</a>.
       </p>
     </div>
   );
