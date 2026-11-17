@@ -57,7 +57,16 @@ function addCards(
       });
     });
   } else {
-    cards.push({ ...base, id: acsCode, acs: acsCode, title, parent, content: c, order: order++ });
+    const q = c?.title;
+    cards.push({
+      ...base,
+      id: acsCode,
+      acs: acsCode,
+      title: q ?? title,
+      parent: q ? (parent ? `${parent}: ${title}` : title) : parent,
+      content: c,
+      order: order++,
+    });
   }
 }
 
@@ -107,7 +116,10 @@ export function codeLabel(card: Card) {
 
 export interface OralQ extends ExaminerQ {
   id: string;
+  /** Card the question came from (empty for regs drill questions). */
   cardId: string;
+  /** Regs drill: the reg entry this question is about. */
+  regId?: string;
 }
 
 export const oralQuestions: OralQ[] = writtenCards.flatMap((c) =>

@@ -4,7 +4,7 @@ import { acsVersion, allCards, cardById, codeLabel, codeMatches, extractCodes, w
 import { exportState, importState, resetProgress, setSettings, update, useStore, type Theme } from "../lib/store";
 import { go, startSession } from "../lib/router";
 import { BackBar, Header, toast } from "../components/Layout";
-import { IChevR, IClose, IDoc, IDownload, IGear, IInfo, IKey, IPlus, IQuestion, IShare } from "../components/icons";
+import { IBook, IChevR, IClose, IDoc, IDownload, IGear, IInfo, IKey, IPlus, IQuestion, IShare } from "../components/icons";
 import { isIOS, isStandalone, useInstall } from "../lib/install";
 
 export function MoreHome() {
@@ -14,6 +14,7 @@ export function MoreHome() {
       <Header title="More" />
       <div className="list">
         <Item icon={<IQuestion width={20} />} color="var(--brand)" title="How to use IFR Cards" sub="Replay the walkthrough" onClick={() => setSettings({ onboarded: false })} />
+        <Item icon={<IBook width={20} />} color="var(--brand)" title="FAR / AIM" sub="Regulations and AIM sections for the rating, plus a regs drill" to="/more/regs" />
         <Item icon={<IKey width={20} />} color="var(--brand)" title="Memory aids" sub={`${mnemonics.length} mnemonics to drill`} to="/more/mnemonics" />
         <Item icon={<IDoc width={20} />} color="var(--sky)" title="Knowledge test report" sub="Study the codes you missed on the written" to="/more/report" />
         <Item icon={<IGear width={20} />} color="var(--text-2)" title="Settings" sub="Checkride date, goals, theme, backup" to="/more/settings" />

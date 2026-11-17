@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
+import { regById } from "../content/regs";
+import { Rich } from "../components/CardFaces";
 import { cardById, codeLabel, oralQuestions, taskByKey, type OralQ } from "../lib/deck";
 import { gradeOral } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
@@ -26,7 +28,7 @@ function pickQuestions(pool: OralQ[], n = 10) {
 /** The question set for the next oral run (set before navigating to /oral/run). */
 let pendingRun: { qs: OralQ[]; label: string } | null = null;
 
-function startOral(qs: OralQ[], label: string) {
+export function startOral(qs: OralQ[], label: string) {
   pendingRun = { qs, label };
   go("/oral/run");
 }
@@ -134,9 +136,10 @@ function OralRun({ qs, label, onExit, onAgain }: { qs: OralQ[]; label: string; o
     );
   }
 
-  const card = cardById.get(q.cardId)!;
+  const card = cardById.get(q.cardId);
+  const reg = q.regId ? regById.get(q.regId) : undefined;
   const answer = (knew: boolean) => {
-    gradeOral(q.id, q.cardId, knew);
+    if (card) gradeOral(q.id, q.cardId, knew);
     setScore((s) => ({ right: s.right + (knew ? 1 : 0), wrong: s.wrong + (knew ? 0 : 1) }));
     setShown(false);
     setI((x) => x + 1);
@@ -155,14 +158,15 @@ function OralRun({ qs, label, onExit, onAgain }: { qs: OralQ[]; label: string; o
           <div className="dpe-avatar"><IMic /></div>
           <div className="grow">
             <div style={{ fontWeight: 700, fontSize: 14 }}>Examiner</div>
-            <button className="chip code" onClick={() => go(`/card/${card.id}`)}>{codeLabel(card)}</button>
+            {card && <button className="chip code" onClick={() => go(`/card/${card.id}`)}>{codeLabel(card)}</button>}
+            {reg && shown && <button className="chip code" onClick={() => go(`/reg/${reg.id}`)}>{reg.cite}</button>}
           </div>
         </div>
         <div className="oral-q">{q.q}</div>
         {shown ? (
           <div className="oral-a">
             <div className="tiny" style={{ fontWeight: 750, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--green)", marginBottom: 6 }}>A good answer</div>
-            {q.a}
+            <Rich text={q.a} />
           </div>
         ) : (
           <p className="small muted" style={{ marginTop: 18 }}>Answer out loud first — then check yourself.</p>

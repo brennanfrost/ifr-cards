@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from "react";
 import { type Card, TYPE_LABEL, areaById, codeLabel, taskByKey } from "../lib/deck";
 import { IFlip, IQuestion } from "./icons";
+import { regForRef } from "../content/regs";
+import { go } from "../lib/router";
 
 /** Renders **bold** inside a string. */
 export function Rich({ text }: { text: string }) {
@@ -100,7 +102,28 @@ export function BackContent({ card }: { card: Card }) {
         </div>
       ) : null}
       {c.refs?.length ? (
-        <div className="refs-line"><span>References</span>{c.refs.join(" · ")}</div>
+        <div className="refs-line">
+          <span>References</span>
+          {c.refs.map((r, i) => {
+            const reg = regForRef(r);
+            return (
+              <span key={r} className="ref-item">
+                {i > 0 && " · "}
+                {reg ? (
+                  <button
+                    className="ref-link"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => { e.stopPropagation(); go(`/reg/${reg.id}`); }}
+                  >
+                    {r}
+                  </button>
+                ) : (
+                  r
+                )}
+              </span>
+            );
+          })}
+        </div>
       ) : null}
     </div>
   );

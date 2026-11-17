@@ -7,6 +7,7 @@ import { Home } from "./screens/Home";
 import { Session, StudyHome } from "./screens/Study";
 import { AreaView, BrowseHome, CardView, TaskView } from "./screens/Browse";
 import { Oral, OralSession } from "./screens/Oral";
+import { RegsHome, RegView } from "./screens/Regs";
 import { About, Mnemonics, MoreHome, Report, Settings } from "./screens/More";
 
 function useTheme() {
@@ -36,11 +37,13 @@ function Screen({ route }: { route: string }) {
       if (!parts[1]) return <BrowseHome />;
       return parts[1].includes(".") ? <TaskView taskKey={parts[1]} /> : <AreaView id={parts[1]} />;
     case "card": return <CardView id={decodeURIComponent(parts[1] ?? "")} />;
+    case "reg": return <RegView id={decodeURIComponent(parts[1] ?? "")} />;
     case "more":
       if (parts[1] === "mnemonics") return <Mnemonics />;
       if (parts[1] === "report") return <Report />;
       if (parts[1] === "settings") return <Settings />;
       if (parts[1] === "about") return <About />;
+      if (parts[1] === "regs") return <RegsHome />;
       return <MoreHome />;
     default: return <Home />;
   }
