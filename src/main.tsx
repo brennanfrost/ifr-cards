@@ -8,7 +8,18 @@ import { registerSW } from "virtual:pwa-register";
 loadState();
 
 try {
-  registerSW({ immediate: true });
+  registerSW({
+    immediate: true,
+    onRegisteredSW(_url, reg) {
+      if (!reg) return;
+      // iOS home-screen apps rarely check for updates on their own: check on every open and hourly.
+      const check = () => reg.update().catch(() => {});
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") check();
+      });
+      setInterval(check, 60 * 60 * 1000);
+    },
+  });
 } catch {
   /* service workers unavailable (e.g., sandboxed preview) */
 }

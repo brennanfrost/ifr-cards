@@ -17,7 +17,7 @@ export function MoreHome() {
         <Item icon={<IKey width={20} />} color="var(--brand)" title="Memory aids" sub={`${mnemonics.length} mnemonics to drill`} to="/more/mnemonics" />
         <Item icon={<IDoc width={20} />} color="var(--sky)" title="Knowledge test report" sub="Study the codes you missed on the written" to="/more/report" />
         <Item icon={<IGear width={20} />} color="var(--text-2)" title="Settings" sub="Checkride date, goals, theme, backup" to="/more/settings" />
-        <Item icon={<IInfo width={20} />} color="var(--text-2)" title="About and sources" sub={`${writtenCards.length} written cards · ${acsVersion}`} to="/more/about" />
+        <Item icon={<IInfo width={20} />} color="var(--text-2)" title="About and sources" sub={`${writtenCards.length} written cards · version ${__BUILD__}`} to="/more/about" />
       </div>
       {!isStandalone() && (
         <div className="panel" style={{ marginTop: 14 }}>
