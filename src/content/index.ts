@@ -7,6 +7,8 @@ import { area3 } from "./area3";
 import { area4 } from "./area4";
 import { area5 } from "./area5";
 import { area6 } from "./area6";
+import { area7 } from "./area7";
+import { area8 } from "./area8";
 
 export const content: ContentMap = {
   ...area1TaskA,
@@ -17,6 +19,8 @@ export const content: ContentMap = {
   ...area4,
   ...area5,
   ...area6,
+  ...area7,
+  ...area8,
 };
 
 export * from "./types";
