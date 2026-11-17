@@ -72,6 +72,7 @@ export function BackContent({ card }: { card: Card }) {
   return (
     <div className="card-back">
       {c.core && <div className="core">{c.core}</div>}
+      {c.sections.some((s) => s.b.length) && <div className="back-label">Key points</div>}
       {c.sections.map((s, i) => (
         <div className="sec" key={i}>
           {s.h && <h4>{s.h}</h4>}
@@ -94,12 +95,12 @@ export function BackContent({ card }: { card: Card }) {
       )}
       {c.examiner?.length ? (
         <div className="exq">
-          <div className="sec"><h4>Examiner might ask</h4></div>
+          <div className="back-label">Examiner might ask</div>
           {c.examiner.map((q, i) => <ExaminerItem key={i} q={q.q} a={q.a} />)}
         </div>
       ) : null}
       {c.refs?.length ? (
-        <div className="refs">{c.refs.map((r) => <span className="chip" key={r}>{r}</span>)}</div>
+        <div className="refs-line"><span>References</span>{c.refs.join(" · ")}</div>
       ) : null}
     </div>
   );
@@ -128,10 +129,8 @@ export function CardBack({ card }: { card: Card }) {
     <>
       <CardHead card={card} />
       <div className="back-scroll">
-        <div className="back-title">
-          {card.parent ? <span className="muted">{card.parent} — </span> : null}
-          {card.title}
-        </div>
+        {card.parent && <div className="back-parent">{card.parent}</div>}
+        <div className="back-title">{card.title}</div>
         <BackContent card={card} />
       </div>
     </>
