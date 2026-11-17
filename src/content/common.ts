@@ -51,4 +51,3 @@ export const mfd = (task: string): CardContent => ({
   refs: ["FAA-H-8083-15 (Instrument Flying Handbook)", "FAA-H-8083-6 (Advanced Avionics Handbook)"],
 });
 
-export const stdTolerance = "**±100 ft**, heading **±10°**, airspeed **±10 kt**, and no more than **¾-scale** CDI deflection";
