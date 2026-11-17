@@ -1,5 +1,6 @@
+import { EngineChoice } from "../components/EngineChoice";
 import { useMemo } from "react";
-import { allCards, areas, cardsForArea, acsVersion } from "../lib/deck";
+import { activeCards, areas, cardsForArea, acsVersion } from "../lib/deck";
 import { daysUntil, dueCount, isWeak, readiness, streak, todayKey } from "../lib/scheduler";
 import { useStore } from "../lib/store";
 import { go, startSession } from "../lib/router";
@@ -13,7 +14,7 @@ export function Home() {
   const days = daysUntil(s.settings.checkride);
   const today = s.activity[todayKey()] ?? 0;
   const st = streak(s.activity);
-  const weak = useMemo(() => allCards.filter((c) => isWeak(s.progress[c.id])).length, [s.progress]);
+  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id])).length, [s.progress, s.settings.engines]);
   const install = useInstall();
 
   const areaRows = useMemo(
@@ -34,6 +35,13 @@ export function Home() {
         </div>
       </div>
 
+      {!s.settings.engines && (
+        <div className="panel" style={{ marginBottom: 12 }}>
+          <div className="li-title">Single-engine or multiengine checkride?</div>
+          <div className="li-sub" style={{ marginBottom: 12 }}>Single-engine hides the engine-out Tasks you won't be tested on.</div>
+          <EngineChoice />
+        </div>
+      )}
       <div className="hero" style={{ marginTop: 6 }}>
         {days !== null && days >= 0 ? (
           <button style={{ textAlign: "left", width: "100%" }} onClick={() => go("/more/settings")}>

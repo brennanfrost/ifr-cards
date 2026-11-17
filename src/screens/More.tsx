@@ -1,3 +1,4 @@
+import { EngineChoice } from "../components/EngineChoice";
 import { useMemo, useRef, useState } from "react";
 import { mnemonics } from "../content";
 import { acsVersion, allCards, cardById, codeLabel, codeMatches, extractCodes, writtenCards } from "../lib/deck";
@@ -206,6 +207,10 @@ export function Settings() {
         <div className="row">
           <div className="grow"><div style={{ fontWeight: 650 }}>Include unwritten cards</div><div className="small muted">Show ACS-only elements (no answer yet) in sessions</div></div>
           <button className={`toggle${s.includeUnwritten ? " on" : ""}`} role="switch" aria-checked={s.includeUnwritten} onClick={() => setSettings({ includeUnwritten: !s.includeUnwritten })} />
+        </div>
+        <div>
+          <div style={{ fontWeight: 650, marginBottom: 8 }}>Checkride airplane</div>
+          <EngineChoice />
         </div>
         <div>
           <div style={{ fontWeight: 650, marginBottom: 8 }}>Theme</div>

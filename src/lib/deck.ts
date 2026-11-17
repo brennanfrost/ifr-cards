@@ -1,3 +1,4 @@
+import { getState } from "./store";
 import acs from "../data/acs.json";
 import { content, type CardContent, type ExaminerQ } from "../content";
 
@@ -94,11 +95,25 @@ export function taskByKey(key: string) {
   const [a, t] = key.split(".");
   return areaById(a).tasks.find((x) => x.id === t)!;
 }
+/** Tasks tested only on a multiengine checkride (AMEL/AMES). */
+export const MULTI_ONLY_TASKS = new Set(["VII.B", "VII.C"]);
+
+/** Is this Task part of the user's checkride (single- vs multiengine)? */
+export function taskApplies(key: string) {
+  return getState().settings.engines === "multi" || !MULTI_ONLY_TASKS.has(key);
+}
+export const applies = (c: Card) => taskApplies(c.taskKey);
+
+/** Cards for the user's checkride (multiengine Tasks removed for single-engine applicants). */
+export const activeCards = () => cards.filter(applies);
+export const activeWritten = () => writtenCards.filter(applies);
+export const activeOral = () => oralQuestions.filter((q) => applies(cardById.get(q.cardId)!));
+
 export function cardsForTask(key: string) {
-  return cards.filter((c) => c.taskKey === key);
+  return cards.filter((c) => c.taskKey === key && applies(c));
 }
 export function cardsForArea(id: string) {
-  return cards.filter((c) => c.areaId === id);
+  return cards.filter((c) => c.areaId === id && applies(c));
 }
 
 /** Does a code (element, task "IR.I.B", or area "IR.I") cover this card? */

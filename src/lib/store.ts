@@ -27,6 +27,8 @@ export interface Settings {
   onboarded: boolean;
   /** Design/tutorial version the saved settings were made under. */
   design?: number;
+  /** Airplane class for the checkride. Multiengine-only Tasks are hidden unless "multi". */
+  engines?: "single" | "multi";
 }
 
 export interface State {

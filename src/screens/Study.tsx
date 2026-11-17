@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { allCards, cardById, codeLabel, type Card } from "../lib/deck";
+import { activeCards, cardById, codeLabel, type Card } from "../lib/deck";
 import { buildSession, dueCount, grade, isWeak, type Scope } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
 import { back, go, startSession, takeScope } from "../lib/router";
@@ -12,7 +12,7 @@ import { Header } from "../components/Layout";
 export function StudyHome() {
   const s = useStore((x) => x);
   const { due, fresh } = dueCount(s);
-  const weak = useMemo(() => allCards.filter((c) => isWeak(s.progress[c.id])).length, [s.progress]);
+  const weak = useMemo(() => activeCards().filter((c) => isWeak(s.progress[c.id])).length, [s.progress, s.settings.engines]);
   const smart: Scope = { kind: "smart", label: "Smart session" };
   return (
     <div className="fade-in">

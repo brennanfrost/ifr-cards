@@ -2,7 +2,7 @@ import { useState, type ReactNode } from "react";
 import { setSettings, useLoaded, useStore } from "../lib/store";
 import { daysUntil } from "../lib/scheduler";
 import { isIOS, isStandalone } from "../lib/install";
-import { writtenCards, allCards } from "../lib/deck";
+import { EngineChoice } from "./EngineChoice";
 import { go } from "../lib/router";
 import { ICards, IChevL, IChevR, IMic, Mark } from "./icons";
 
@@ -99,6 +99,20 @@ const steps: Step[] = [
     ),
   },
   {
+    label: "Your airplane",
+    title: "What will you fly on the checkride?",
+    body: (
+      <>
+        <p>
+          A multiengine checkride adds two engine-out Tasks (Area VII, Tasks B and C). If you're testing in a single-engine airplane, those cards are
+          hidden so you only study what's on your test.
+        </p>
+        <div className="tut-visual"><EngineChoice /></div>
+        <p className="small muted">You can change this later in More → Settings.</p>
+      </>
+    ),
+  },
+  {
     label: "How it's organized",
     title: "Areas, Tasks and elements",
     body: (
@@ -114,9 +128,6 @@ const steps: Step[] = [
           <div className="l3">K3h · Thunderstorms and microbursts</div>
           <div className="l3">R1 · Go/no-go and continue/divert decisions</div>
         </div>
-        <p className="small muted">
-          {writtenCards.length} of {allCards.length} cards have full answers so far. The rest show the ACS text and references until they're written.
-        </p>
       </>
     ),
   },
@@ -221,10 +232,11 @@ export function Tutorial() {
 
 function TutorialSteps() {
   const [i, setI] = useState(0);
+  const engines = useStore((x) => x.settings.engines);
   const step = steps[i];
   const last = i === steps.length - 1;
   const finish = () => {
-    setSettings({ onboarded: true });
+    setSettings({ onboarded: true, engines: engines ?? "single" });
     go("/", true);
   };
 
@@ -247,7 +259,7 @@ function TutorialSteps() {
           {last ? (
             <button className="btn primary" onClick={finish}><ICards /> Start studying</button>
           ) : (
-            <button className="btn primary" onClick={() => setI((x) => x + 1)}>Next <IChevR /></button>
+            <button className="btn primary" disabled={step.label === "Your airplane" && !engines} onClick={() => setI((x) => x + 1)}>Next <IChevR /></button>
           )}
         </div>
       </div>

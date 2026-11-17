@@ -495,3 +495,15 @@ textarea.input { min-height: 110px; resize: vertical; line-height: 1.4; }
 .card-back .sec li.sub::before { width: 7px; height: 2px; border-radius: 1px; top: 0.75em; }
 .ref-link { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; font: inherit; font-weight: 650; }
 .reg-quote { margin: 4px 0 0; padding: 12px 14px; border-left: 3px solid var(--maroon); background: var(--surface-2); border-radius: 0 8px 8px 0; font-size: 15px; line-height: 1.5; color: var(--text-2); font-style: italic; }
+
+/* ---------- Single / multiengine choice ---------- */
+.engine-choice { display: grid; gap: 8px; }
+.engine-opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 13px 14px; border-radius: 12px; border: 1.5px solid var(--line-2); background: var(--surface); }
+.engine-opt.on { border-color: var(--maroon); background: var(--brand-soft); }
+.engine-radio { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--line-2); flex: none; position: relative; }
+.engine-opt.on .engine-radio { border-color: var(--maroon); }
+.engine-opt.on .engine-radio::after { content: ""; position: absolute; inset: 3px; border-radius: 50%; background: var(--maroon); }
+.engine-t { display: block; font-weight: 750; font-size: 16px; }
+.engine-d { display: block; font-size: 13.5px; color: var(--muted); margin-top: 1px; }
+:root[data-theme="dark"] .engine-opt.on .engine-radio { border-color: var(--accent); }
+:root[data-theme="dark"] .engine-opt.on .engine-radio::after { background: var(--accent); }

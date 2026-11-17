@@ -1,4 +1,4 @@
-import { areaById, areas, cardById, cardsForArea, cardsForTask, codeLabel, taskByKey, TYPE_LABEL, type ElemType } from "../lib/deck";
+import { areaById, areas, cardById, taskApplies, cardsForArea, cardsForTask, codeLabel, taskByKey, TYPE_LABEL, type ElemType } from "../lib/deck";
 import { mastery, readiness } from "../lib/scheduler";
 import { useStore } from "../lib/store";
 import { go, startSession } from "../lib/router";
@@ -56,7 +56,7 @@ export function AreaView({ id }: { id: string }) {
       <div className="eyebrow" style={{ marginTop: 4 }}>Area of Operation {area.id}</div>
       <h1 style={{ margin: "0 2px 14px", fontSize: 26, letterSpacing: "-0.02em" }}>{area.name}</h1>
       <div className="list">
-        {area.tasks.map((t) => {
+        {area.tasks.filter((t) => taskApplies(`${area.id}.${t.id}`)).map((t) => {
           const key = `${area.id}.${t.id}`;
           const cards = cardsForTask(key);
           const written = cards.filter((c) => c.content).length;

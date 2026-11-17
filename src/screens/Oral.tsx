@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { regById } from "../content/regs";
 import { Rich } from "../components/CardFaces";
-import { cardById, codeLabel, oralQuestions, taskByKey, type OralQ } from "../lib/deck";
+import { activeOral, cardById, codeLabel, taskByKey, type OralQ } from "../lib/deck";
 import { gradeOral } from "../lib/scheduler";
 import { getState, useStore } from "../lib/store";
 import { back, go } from "../lib/router";
@@ -52,7 +52,7 @@ export function OralSession() {
       label={run.label}
       onExit={exit}
       onAgain={() => {
-        setRun({ ...run, qs: pickQuestions(run.qs.length < 10 ? run.qs : oralQuestions) });
+        setRun({ ...run, qs: pickQuestions(run.qs.length < 10 ? run.qs : activeOral()) });
         setRound((r) => r + 1);
       }}
     />
@@ -61,15 +61,17 @@ export function OralSession() {
 
 export function Oral() {
   const oral = useStore((s) => s.oral);
+  const engines = useStore((s) => s.settings.engines);
+  const pool = useMemo(() => activeOral(), [engines]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const byTask = useMemo(() => {
     const m = new Map<string, OralQ[]>();
-    for (const q of oralQuestions) {
+    for (const q of pool) {
       const key = cardById.get(q.cardId)!.taskKey;
       m.set(key, [...(m.get(key) ?? []), q]);
     }
     return [...m.entries()];
-  }, []);
+  }, [pool]);
 
   const answered = Object.keys(oral).length;
   return (
@@ -80,13 +82,13 @@ export function Oral() {
           <div className="dpe-avatar"><IUser /></div>
           <div>
             <div style={{ fontWeight: 700 }}>Scenario questions</div>
-            <div className="small muted">{oralQuestions.length} questions · {answered} practiced</div>
+            <div className="small muted">{pool.length} questions · {answered} practiced</div>
           </div>
         </div>
         <p className="small" style={{ color: "var(--text-2)", margin: "0 0 16px" }}>
           Say your answer out loud like you would to the examiner, then reveal a model answer. Questions you miss come back first next time.
         </p>
-        <button className="btn primary" onClick={() => startOral(pickQuestions(oralQuestions), "Mixed oral")}>
+        <button className="btn primary" onClick={() => startOral(pickQuestions(pool), "Mixed oral")}>
           <IShuffle /> Start a 10-question oral
         </button>
       </div>

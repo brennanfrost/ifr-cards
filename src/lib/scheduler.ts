@@ -1,4 +1,4 @@
-import { type Card, allCards, codeMatches, writtenCards, oralQuestions } from "./deck";
+import { type Card, activeCards, activeWritten, codeMatches, oralQuestions } from "./deck";
 import { type CardProgress, type State, update } from "./store";
 
 const DAY = 86_400_000;
@@ -92,7 +92,7 @@ export interface Scope {
 }
 
 export function scopePool(scope: Scope, s: State): Card[] {
-  const base = s.settings.includeUnwritten || scope.kind === "task" ? allCards : writtenCards;
+  const base = s.settings.includeUnwritten || scope.kind === "task" ? activeCards() : activeWritten();
   let pool = base;
   if (scope.kind === "task") pool = base.filter((c) => c.taskKey === scope.key);
   if (scope.kind === "area") pool = base.filter((c) => c.areaId === scope.key);
@@ -123,7 +123,7 @@ export function buildSession(scope: Scope, s: State, size = s.settings.sessionSi
 
 export function dueCount(s: State) {
   const now = Date.now();
-  const pool = s.settings.includeUnwritten ? allCards : writtenCards;
+  const pool = s.settings.includeUnwritten ? activeCards() : activeWritten();
   let due = 0;
   let fresh = 0;
   for (const c of pool) {
