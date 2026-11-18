@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect, useState, type ReactNode } from "react";
 import { back, go } from "../lib/router";
 import { IBook, ICards, IChevL, IHome, IMic, IMore } from "./icons";
@@ -37,6 +38,7 @@ export function BottomNav({ route }: { route: string }) {
   const active =
     TABS.slice(1).find((t) => route.startsWith(t.path))?.path ??
     (route.startsWith("/card") ? "/browse" : route.startsWith("/brief") ? "/study" : route.startsWith("/reg") ? "/more" : "/");
+  // /notes highlights Home (it lives on the Home screen)
   return (
     <nav className="nav" aria-label="Main">
       <div className="nav-inner">
@@ -59,14 +61,16 @@ export function Sheet({ open, onClose, children }: { open: boolean; onClose: () 
     return () => window.removeEventListener("keydown", k);
   }, [open, onClose]);
   if (!open) return null;
-  return (
+  // Portal to <body> so a sheet opened from inside a swiping card isn't trapped by its transform.
+  return createPortal(
     <>
       <div className="sheet-backdrop" onClick={onClose} />
       <div className="sheet" role="dialog" aria-modal="true">
         <div className="sheet-grab" />
         {children}
       </div>
-    </>
+    </>,
+    document.body,
   );
 }
 

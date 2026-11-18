@@ -1,3 +1,4 @@
+import { AddNoteButton } from "../screens/Notes";
 import { useState, type ReactNode } from "react";
 import { type Card, TYPE_LABEL, areaById, codeLabel, taskByKey } from "../lib/deck";
 import { IFlip, IQuestion } from "./icons";
@@ -155,6 +156,7 @@ export function CardBack({ card }: { card: Card }) {
         {card.parent && <div className="back-parent">{card.parent}</div>}
         <div className="back-title">{card.title}</div>
         <BackContent card={card} />
+        <AddNoteButton cardId={card.id} area={card.areaId} />
       </div>
     </>
   );

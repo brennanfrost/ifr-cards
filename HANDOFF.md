@@ -26,6 +26,7 @@ I'm continuing a project: **IFR Cards**, a free, mobile-first PWA flashcard app 
 **Sources rule:** FAA sources only: 14 CFR (eCFR), AIM, FAA handbooks (8083-series), ACs, ACS, TPP/chart guides, FAA-approved POH/AFM; NWS sites only as weather data sources. Verify via the eCFR API in a browser (`/api/versioner/v1/full/<date>/title-14.xml?part=91&section=91.xxx`) and AIM pages on faa.gov.
 **Single/multiengine:** `settings.engines`; `MULTI_ONLY_TASKS` (VII.B, VII.C) hidden unless "multi" (`taskApplies`, `activeCards`).
 **Ground/Flight:** Study tab switch. Ground sessions, due counts and readiness use K+R only (`inGround`); Skill cards are Flight briefings (`#/study/flight`, `#/brief/<task>`, `state.briefed`). Settings toggle "Skill cards in study sessions" adds them back.
+**Study notes:** `state.notes` (addNote/updateNote/deleteNote in store), `#/notes` screen, Home card, More entry, "Add to my study notes" on every card back (sheet portals to body). Included in backups.
 **Possible next steps:** content review by a CFII; more Mock Oral scenarios.
 
 ## Content rules

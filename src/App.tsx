@@ -1,3 +1,4 @@
+import { NotesScreen } from "./screens/Notes";
 import { useEffect } from "react";
 import { useRoute } from "./lib/router";
 import { useLoaded, useStore } from "./lib/store";
@@ -39,6 +40,7 @@ function Screen({ route }: { route: string }) {
       if (!parts[1]) return <BrowseHome />;
       return parts[1].includes(".") ? <TaskView taskKey={parts[1]} /> : <AreaView id={parts[1]} />;
     case "card": return <CardView id={decodeURIComponent(parts[1] ?? "")} />;
+    case "notes": return <NotesScreen />;
     case "reg": return <RegView id={decodeURIComponent(parts[1] ?? "")} />;
     case "more":
       if (parts[1] === "mnemonics") return <Mnemonics />;

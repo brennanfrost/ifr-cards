@@ -515,3 +515,19 @@ textarea.input { min-height: 110px; resize: vertical; line-height: 1.4; }
 .brief-num { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex: none; background: var(--sage-soft); color: var(--sage); font-weight: 850; font-size: 14px; margin-top: 2px; }
 .brief-title { font-size: 18px; font-weight: 800; line-height: 1.25; margin-top: 2px; }
 .brief-item .core { font-size: 16px; }
+
+/* ---------- Study notes ---------- */
+.pill-opt { height: 34px; padding: 0 13px; border-radius: 99px; border: 1.5px solid var(--line-2); background: var(--surface); font-weight: 650; font-size: 14px; color: var(--text-2); }
+.pill-opt.on { background: var(--maroon); border-color: var(--maroon); color: #fff; }
+.note-row { display: flex; gap: 12px; align-items: flex-start; padding: 14px 14px 14px 16px; border-bottom: 1px solid var(--line); }
+.note-row:last-child { border-bottom: 0; }
+.note-check { width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--line-2); flex: none; display: grid; place-items: center; margin-top: 1px; color: #fff; }
+.note-check.on { background: var(--green); border-color: var(--green); }
+.note-text { font-size: 16px; line-height: 1.4; white-space: pre-wrap; word-break: break-word; }
+.note-row.done .note-text { color: var(--muted); text-decoration: line-through; }
+.note-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 8px; }
+.note-del { width: 32px; height: 32px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); flex: none; }
+.note-del.confirm { width: auto; padding: 0 10px; background: var(--red-soft); color: var(--red); font-weight: 750; font-size: 13px; }
+.note-add-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; height: 38px; padding: 0 14px; border-radius: 99px; border: 1.5px dashed color-mix(in srgb, var(--brand) 45%, transparent); color: var(--brand); font-weight: 700; font-size: 14px; }
+.notes-card { display: block; width: 100%; text-align: left; margin-top: 12px; }
+.note-plus { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--brand-soft); color: var(--brand); flex: none; }

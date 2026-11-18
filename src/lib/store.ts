@@ -41,6 +41,21 @@ export interface State {
   activity: Record<string, number>; // YYYY-MM-DD -> cards reviewed
   /** Flight briefings read: task key -> time last marked briefed. */
   briefed: Record<string, number>;
+  /** The student's own "study this later" notes. */
+  notes: Note[];
+}
+
+export interface Note {
+  id: string;
+  text: string;
+  /** Where it came up: "King Schools", "Jeppesen", "Lesson", "Other". */
+  source?: string;
+  /** ACS Area of Operation ("I"…"VIII"), if tagged. */
+  area?: string;
+  /** Card it was added from, if any. */
+  cardId?: string;
+  created: number;
+  done?: number;
 }
 
 const KEY = "ifr-cards:v1";
@@ -52,6 +67,7 @@ const defaults: State = {
   testCodes: [],
   activity: {},
   briefed: {},
+  notes: [],
 };
 
 let state: State = defaults;
@@ -154,6 +170,17 @@ export function importState(json: string) {
 
 export function resetProgress() {
   update((s) => ({ ...s, progress: {}, oral: {}, activity: {} }));
+}
+
+export function addNote(n: Omit<Note, "id" | "created">) {
+  const note: Note = { ...n, id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`, created: Date.now() };
+  update((s) => ({ ...s, notes: [note, ...(s.notes ?? [])] }));
+}
+export function updateNote(id: string, patch: Partial<Note>) {
+  update((s) => ({ ...s, notes: (s.notes ?? []).map((n) => (n.id === id ? { ...n, ...patch } : n)) }));
+}
+export function deleteNote(id: string) {
+  update((s) => ({ ...s, notes: (s.notes ?? []).filter((n) => n.id !== id) }));
 }
 
 export function markBriefed(taskKey: string) {

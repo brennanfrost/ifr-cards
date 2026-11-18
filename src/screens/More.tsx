@@ -15,6 +15,7 @@ export function MoreHome() {
       <Header title="More" />
       <div className="list">
         <Item icon={<IQuestion width={20} />} color="var(--brand)" title="How to use IFR Cards" sub="Replay the walkthrough" onClick={() => setSettings({ onboarded: false })} />
+        <Item icon={<IPlus width={20} />} color="var(--brand)" title="Study notes" sub="Topics to come back to from videos, the textbook and lessons" to="/notes" />
         <Item icon={<IBook width={20} />} color="var(--brand)" title="FAR / AIM" sub="Regulations and AIM sections for the rating, plus a regs drill" to="/more/regs" />
         <Item icon={<IKey width={20} />} color="var(--brand)" title="Memory aids" sub={`${mnemonics.length} mnemonics to drill`} to="/more/mnemonics" />
         <Item icon={<IDoc width={20} />} color="var(--sky)" title="Knowledge test report" sub="Study the codes you missed on the written" to="/more/report" />

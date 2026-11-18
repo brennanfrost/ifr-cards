@@ -1,3 +1,4 @@
+import { NotesHomeCard } from "./Notes";
 import { EngineChoice } from "../components/EngineChoice";
 import { useMemo } from "react";
 import { activeCards, areas, cardsForArea, acsVersion } from "../lib/deck";
@@ -109,6 +110,8 @@ export function Home() {
       {install.canInstall && (
         <button className="btn" style={{ marginTop: 12 }} onClick={install.prompt}>Install the app on this device</button>
       )}
+
+      <NotesHomeCard />
 
       <div className="eyebrow">Readiness by Area of Operation</div>
       <div className="list">
